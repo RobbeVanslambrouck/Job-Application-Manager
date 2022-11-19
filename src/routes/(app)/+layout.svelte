@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { user } from '../../lib/stores/auth';
-	import { redirect } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
 
 	onMount(() => {
 		if (!$user) {
@@ -10,8 +10,10 @@
 		}
 	});
 
-	$: if (!$user) {
-		goto('/');
+	$: if (browser) {
+		if (!$user) {
+			goto('/login');
+		}
 	}
 </script>
 
