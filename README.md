@@ -10,6 +10,8 @@ this is a personal project and is currently under development. this project is m
 
 ### [Github repository](https://github.com/RobbeVanslambrouck/Job-Application-Manager)
 
+### [Figma Design ](https://www.figma.com/file/erRm4B42gTPDxe3t1mz13x/Job-Application-Manager?node-id=0%3A1&t=LTozWdDikJEk3DCp-1)
+
 ## Local build
 
 ```console
