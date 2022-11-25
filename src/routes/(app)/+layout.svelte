@@ -20,7 +20,7 @@
 <aside>
 	<nav>
 		<ul>
-			<li><a href="/dashboard/companies">companies</a></li>
+			<li><a href="/dashboard/applications">applications</a></li>
 			<li><a href="/dashboard/interim">interim</a></li>
 			<li><a href="/dashboard/account">account</a></li>
 			<li><a href="/dashboard/settings">settings</a></li>
