@@ -20,7 +20,9 @@
 <article>
 	<h3>{data.companyName}</h3>
 	<p>{data.jobTitle}</p>
-	<p>applied on: {data.creationDate.toDateString()}</p>
+	{#if data.appliedDate}
+		<p>applied on: {data.appliedDate.toDateString()}</p>
+	{/if}
 
 	<div>
 		<button>add interview</button>

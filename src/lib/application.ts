@@ -1,7 +1,7 @@
 export interface Application {
 	companyName: string;
 	jobTitle: string;
-	creationDate: Date;
+	appliedDate: Date | null;
 	links: string[];
 	interviews: Interview[];
 }
@@ -10,7 +10,7 @@ export function createApplication(companyName = '', jobTitle = ''): Application 
 	return {
 		companyName: companyName,
 		jobTitle: jobTitle,
-		creationDate: new Date(),
+		appliedDate: null,
 		links: [],
 		interviews: []
 	};
