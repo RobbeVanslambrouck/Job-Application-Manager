@@ -1,4 +1,5 @@
-import { createApplication, createInterview } from '$lib/application';
+import { createApplication } from '$lib/application';
+import { createInterview } from '$lib/Interview';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
