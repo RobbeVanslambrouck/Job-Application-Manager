@@ -1,10 +1,11 @@
 import type { Interview } from './Interview';
+import type { Link } from './Link';
 
 export interface Application {
 	companyName: string;
 	jobTitle: string;
 	appliedDate: Date | null;
-	links: string[];
+	links: Link[];
 	interviews: Interview[];
 }
 
