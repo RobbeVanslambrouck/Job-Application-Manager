@@ -21,17 +21,22 @@
 
 <article>
 	<h3>{data.companyName} - {data.jobTitle}</h3>
-	{#if data.appliedDate}
-		<p>{applyPrefix()}{data.appliedDate.toDateString()}</p>
-	{:else}
-		<p>not yet applied</p>
-		<input type="date" name="applyDate" id="applyDate" bind:value={date} />
-		<button on:click={handleApplied}>applied</button>
-	{/if}
-
 	<div>
-		<button>add interview</button>
+		<h4>application</h4>
+		{#if data.appliedDate}
+			<p>{applyPrefix()}{data.appliedDate.toDateString()}</p>
+		{:else}
+			<p>not yet applied</p>
+			<input type="date" name="applyDate" id="applyDate" bind:value={date} />
+			<button on:click={handleApplied}>applied</button>
+		{/if}
+	</div>
+	<div>
+		<h4>interviews</h4>
 		<Interviews interviews={data.interviews} />
 	</div>
-	<Links links={data.links} />
+	<div>
+		<h4>links</h4>
+		<Links links={data.links} />
+	</div>
 </article>
