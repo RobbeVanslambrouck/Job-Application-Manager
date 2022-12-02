@@ -1,5 +1,7 @@
 import type { Interview } from './Interview';
 import type { Link } from './Link';
+import { db } from '$lib/firebase';
+import { collection, addDoc } from 'firebase/firestore';
 
 export interface Application {
 	companyName: string;
@@ -17,4 +19,13 @@ export function createApplication(companyName = '', jobTitle = ''): Application 
 		links: [],
 		interviews: []
 	};
+}
+
+export async function applicationToFirestore(uid: string, application: Application) {
+	try {
+		const path = uid + '/applications';
+		await addDoc(collection(db, path), application);
+	} catch (err) {
+		console.error(err);
+	}
 }
