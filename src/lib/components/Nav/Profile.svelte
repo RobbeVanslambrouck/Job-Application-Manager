@@ -1,5 +1,5 @@
 <script lang="ts">
-	import profile from '$lib/assets/user-circle-svgrepo-com.svg';
+	import profile from '$lib/assets/user-circle.svg';
 	export let name: string | null | undefined;
 	export let profileUrl: string | null | undefined;
 </script>
