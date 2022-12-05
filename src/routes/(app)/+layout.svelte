@@ -4,6 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import Profile from '$lib/components/Nav/Profile.svelte';
+	import Link from '$lib/components/Nav/Link.svelte';
 
 	onMount(() => {
 		if (!$user) {
@@ -28,9 +29,15 @@
 		<nav>
 			<ul>
 				<li><Profile {...profileAgs} /></li>
-				<li><a href="/dashboard/applications">applications</a></li>
-				<li><a href="/dashboard/interim">interim</a></li>
-				<li><a href="/dashboard/settings">settings</a></li>
+				<li>
+					<Link url="/dashboard/applications" googleIcon="grid_view">applications</Link>
+				</li>
+				<li>
+					<Link url="/dashboard/interim" googleIcon="person_search">interim</Link>
+				</li>
+				<li>
+					<Link url="/dashboard/settings" googleIcon="settings">settings</Link>
+				</li>
 			</ul>
 		</nav>
 	</aside>
@@ -54,5 +61,13 @@
 	}
 	li {
 		list-style: none;
+		margin-bottom: 0.2rem;
+	}
+
+	li:last-child,
+	li:first-child {
+		padding-bottom: 0.8rem;
+		margin-bottom: 0.8rem;
+		border-bottom: 2px solid rgb(var(--md-sys-color-surface-variant));
 	}
 </style>
