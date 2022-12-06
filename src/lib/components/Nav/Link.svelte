@@ -21,7 +21,7 @@
 
 	div {
 		padding: 0.8rem 1.2rem;
-		border-radius: var(--my-border-radius);
+		border-radius: var(--app-border-radius);
 	}
 
 	i {

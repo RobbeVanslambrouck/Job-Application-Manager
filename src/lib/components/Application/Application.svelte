@@ -1,14 +1,8 @@
 <script lang="ts">
 	import type { Application } from '$lib/application';
-	import Interviews from './Interviews.svelte';
-	import Links from './Links.svelte';
 	export let data: Application;
 
 	let date = new Date().toLocaleDateString();
-
-	let handleApplied = () => {
-		data.appliedDate = new Date(date);
-	};
 
 	let hasDateHappened = (date: Date) => {
 		return date.getTime() < Date.now();
@@ -20,23 +14,46 @@
 </script>
 
 <article>
-	<h3>{data.companyName} - {data.jobTitle}</h3>
+	<h3>{data.jobTitle} at {data.companyName}</h3>
 	<div>
-		<h4>application</h4>
+		<h4 class="sr-only">status</h4>
 		{#if data.appliedDate}
 			<p>{applyPrefix()}{data.appliedDate.toDateString()}</p>
 		{:else}
-			<p>not yet applied</p>
-			<input type="date" name="applyDate" id="applyDate" bind:value={date} />
-			<button on:click={handleApplied}>applied</button>
+			<p>created card</p>
 		{/if}
 	</div>
-	<div>
-		<h4>interviews</h4>
-		<Interviews interviews={data.interviews} />
-	</div>
-	<div>
-		<h4>links</h4>
-		<Links links={data.links} />
-	</div>
+	{#if data.links.length !== 0}
+		<div>
+			<h4>links</h4>
+			<ul>
+				{#each data.links as link}
+					<li>{link.name}</li>
+				{/each}
+			</ul>
+		</div>
+	{/if}
 </article>
+
+<style>
+	article {
+		padding: 0.8rem 1.2rem;
+		display: flex;
+		gap: 0.4rem;
+		flex-direction: column;
+		background: rgb(var(--md-sys-color-primary-container));
+		color: rgb(var(--md-sys-color-on-primary-container));
+		border-radius: var(--app-border-radius);
+		min-height: 6rem;
+		cursor: pointer;
+	}
+
+	h3,
+	h4,
+	p {
+		width: 100%;
+		text-align: center;
+		margin: 0;
+		padding: 0;
+	}
+</style>

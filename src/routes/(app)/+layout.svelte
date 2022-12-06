@@ -52,8 +52,15 @@
 	}
 	aside {
 		width: 20rem;
+		min-width: 20rem;
 		padding: 1rem 1.2rem;
 	}
+
+	main {
+		padding: 4rem 1.2rem;
+		width: 100%;
+	}
+
 	ul {
 		padding: 0;
 		margin: 0;

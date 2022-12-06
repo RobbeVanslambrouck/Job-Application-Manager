@@ -19,7 +19,7 @@
 
 <style>
 	.profile {
-		border-radius: var(--my-border-radius);
+		border-radius: var(--app-border-radius);
 	}
 
 	.profile:hover,

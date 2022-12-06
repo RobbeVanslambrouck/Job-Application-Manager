@@ -21,7 +21,7 @@
 </script>
 
 <section>
-	<h2>Applications</h2>
+	<h2 class="sr-only">Applications</h2>
 	<ul>
 		{#each applications as application}
 			<li><Application data={application} /></li>
@@ -29,10 +29,21 @@
 	</ul>
 </section>
 
-<form on:submit|preventDefault={handleAddApplication}>
+<!-- <form on:submit|preventDefault={handleAddApplication}>
 	<label for="company-name">company name</label>
 	<input type="text" name="company-name" id="company-name" bind:value={companyName} />
 	<label for="job-title">job title</label>
 	<input type="text" name="job-title" id="job-title" bind:value={jobTitle} />
 	<button type="submit">add application</button>
-</form>
+</form> -->
+<style>
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(var(--app-min-application-width), 1fr));
+		row-gap: 1.6rem;
+		column-gap: 1.6rem;
+	}
+</style>

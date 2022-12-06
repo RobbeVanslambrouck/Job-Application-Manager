@@ -13,6 +13,20 @@ body {
 	color: rgb(var(--md-sys-color-on-background));
 }
 
+.sr-only {
+	border: 0 !important;
+	clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
+	-webkit-clip-path: inset(50%) !important;
+	clip-path: inset(50%) !important; /* 2 */
+	height: 1px !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	padding: 0 !important;
+	position: absolute !important;
+	width: 1px !important;
+	white-space: nowrap !important; /* 3 */
+}
+
 .headline1,
 .display-small {
 	font-family: var(--md-sys-typescale-headline1-font);
@@ -127,7 +141,8 @@ body {
 }
 
 :root {
-	--my-border-radius: 1rem;
+	--app-border-radius: 1rem;
+	--app-min-application-width: 15rem;
 	color-scheme: light dark;
 	--md-sys-typescale-headline1-font: Roboto, Sans;
 	--md-sys-typescale-headline1-weight: Regular;
