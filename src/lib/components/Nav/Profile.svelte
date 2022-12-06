@@ -1,10 +1,11 @@
 <script lang="ts">
 	import profile from '$lib/assets/user-circle.svg';
+	import { page } from '$app/stores';
 	export let name: string | null | undefined;
 	export let profileUrl: string | null | undefined;
 </script>
 
-<div class="profile">
+<div class="profile" class:active={$page.url.pathname === '/dashboard/account'}>
 	<a href="/dashboard/account">
 		<h2 class="title-large">{name}</h2>
 		{#if profileUrl}
@@ -21,7 +22,8 @@
 		border-radius: var(--my-border-radius);
 	}
 
-	.profile:hover {
+	.profile:hover,
+	.active {
 		background: var(--md-sys-color-surface-1);
 	}
 

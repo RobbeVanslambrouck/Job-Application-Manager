@@ -1,9 +1,10 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	export let url: string;
 	export let googleIcon: string;
 </script>
 
-<div>
+<div class:active={$page.url.pathname === url}>
 	<a href={url} class="body-large">
 		<i class="material-symbols-rounded">{googleIcon}</i>
 		<slot />
@@ -29,6 +30,10 @@
 	}
 
 	div:hover {
+		background: var(--md-sys-color-surface-1);
+	}
+
+	.active {
 		background: var(--md-sys-color-surface-1);
 	}
 </style>
