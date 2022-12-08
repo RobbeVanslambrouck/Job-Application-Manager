@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 
 	$: if ($user) {
-		goto('/dashboard');
+		goto('/dashboard/applications');
 	}
 </script>
 
