@@ -1,26 +1,16 @@
 <script lang="ts">
-	import type { Application } from '$lib/application';
+	import type { Application } from '$lib/Application';
 	export let data: Application;
 
-	let date = new Date().toLocaleDateString();
-
-	let hasDateHappened = (date: Date) => {
-		return date.getTime() < Date.now();
-	};
-
-	let applyPrefix = () => {
-		return hasDateHappened(data.appliedDate as Date) ? 'applied on: ' : 'applying on: ';
-	};
+	let lastEvent = data.events[data.events.length - 1];
 </script>
 
 <article>
 	<h3>{data.jobTitle} at {data.companyName}</h3>
 	<div>
-		<h4 class="sr-only">status</h4>
-		{#if data.appliedDate}
-			<p>{applyPrefix()}{data.appliedDate.toDateString()}</p>
-		{:else}
-			<p>created card</p>
+		<h4 class="sr-only">Latest event</h4>
+		{#if lastEvent}
+			<p>{lastEvent.title} - {lastEvent.timeFromNow()}</p>
 		{/if}
 	</div>
 	{#if data.links.length !== 0}

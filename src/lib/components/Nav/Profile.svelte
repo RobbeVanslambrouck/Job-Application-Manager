@@ -1,18 +1,38 @@
 <script lang="ts">
-	import profile from '$lib/assets/user-circle.svg';
+	import profileAlt from '$lib/assets/user-circle.svg';
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 	export let name: string | null | undefined;
 	export let profileUrl: string | null | undefined;
+
+	let loaded = false;
+	let failed = false;
+	onMount(() => {
+		let profileImg = new Image();
+		if (!profileUrl) {
+			failed = true;
+			return;
+		}
+		profileImg.src = profileUrl;
+
+		profileImg.onload = () => {
+			loaded = true;
+		};
+
+		profileImg.onerror = () => {
+			failed = true;
+		};
+	});
 </script>
 
 <div class="profile" class:active={$page.url.pathname === '/dashboard/account'}>
 	<a href="/dashboard/account">
 		<h2 class="title-large">{name}</h2>
-		{#if profileUrl}
-			<img src={profileUrl} alt="profile" />
+		{#if !loaded || failed}
+			<img src={profileAlt} alt="profile" />
 		{/if}
-		{#if !profileUrl}
-			<img src={profile} alt="profile" />
+		{#if loaded}
+			<img src={profileUrl} alt="profile" />
 		{/if}
 	</a>
 </div>

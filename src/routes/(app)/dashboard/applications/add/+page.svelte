@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { applicationToFirestore, createApplication } from '$lib/application';
+	import { applicationToFirestore, createApplication } from '$lib/Application';
 	import { user } from '$lib/stores/auth';
 
 	let companyName = '';

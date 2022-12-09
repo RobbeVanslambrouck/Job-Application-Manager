@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import { getApplicationsFromFirestore, type Application } from '$lib/application';
+import { getApplicationsFromFirestore, type Application } from '$lib/Application';
 import { auth } from '$lib/firebase';
 import type { PageLoad } from './$types';
 

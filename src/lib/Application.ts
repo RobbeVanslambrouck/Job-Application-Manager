@@ -1,23 +1,22 @@
-import type { Interview } from './Interview';
 import type { Link } from './Link';
 import { db } from '$lib/firebase';
 import { collection, addDoc, getDocs, query, where } from 'firebase/firestore';
+import { ApplicationEvent } from './Event';
 
 export interface Application {
 	companyName: string;
 	jobTitle: string;
-	appliedDate: Date | null;
 	links: Link[];
-	interviews: Interview[];
+	events: ApplicationEvent[];
 }
 
 export function createApplication(companyName = '', jobTitle = ''): Application {
+	const event = new ApplicationEvent('applied');
 	return {
 		companyName: companyName,
 		jobTitle: jobTitle,
-		appliedDate: null,
 		links: [],
-		interviews: []
+		events: [new ApplicationEvent('added application'), event]
 	};
 }
 
@@ -48,13 +47,3 @@ export async function getApplicationsFromFirestore(uid: string): Promise<Applica
 		return [];
 	}
 }
-
-const applicationConverter = {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	fromFirestore: (data: any): Application => {
-		const application = createApplication(data.companyName, data.jobTitle);
-		application.appliedDate = data.appliedDate;
-
-		return application;
-	}
-};
