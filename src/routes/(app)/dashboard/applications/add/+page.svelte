@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { applicationToFirestore, createApplication } from '$lib/Application';
+	import { createEvent } from '$lib/Event';
 	import { user } from '$lib/stores/auth';
 
 	let companyName = '';
@@ -8,6 +9,8 @@
 	const handleAddApplication = () => {
 		if (!$user?.uid) return;
 		const application = createApplication(companyName, jobTitle);
+		const creationEvent = createEvent('created application');
+		application.events.push(creationEvent);
 		applicationToFirestore($user.uid, application);
 	};
 </script>

@@ -1,8 +1,32 @@
 <script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
 	import type { Application } from '$lib/Application';
+	import { getEventRelativeTime, relativeTimeFormat, type IEvent } from '$lib/Event';
 	export let data: Application;
 
-	let lastEvent = data.events[data.events.length - 1];
+	let lastEvent: IEvent;
+	let interval: string | number | NodeJS.Timer | undefined;
+	$: time = '';
+	onMount(() => {
+		if (data.events.length === 0) return;
+
+		lastEvent = data.events[data.events.length - 1];
+		time = relativeTimeFormat(lastEvent);
+
+		let timer = 1000;
+		let rt = Math.abs(getEventRelativeTime(lastEvent));
+		if (rt < 1000 * 60) timer = 1000;
+		else if (rt < 1000 * 60 * 60) timer = 1000 * 60;
+		else if (rt < 1000 * 60 * 60 * 24) timer = 1000 * 60 * 60;
+
+		interval = setInterval(() => {
+			time = relativeTimeFormat(lastEvent);
+		}, timer);
+	});
+
+	onDestroy(() => {
+		clearInterval(interval);
+	});
 </script>
 
 <article>
@@ -10,7 +34,7 @@
 	<div>
 		<h4 class="sr-only">Latest event</h4>
 		{#if lastEvent}
-			<p>{lastEvent.title} - {lastEvent.timeFromNow()}</p>
+			<p>{lastEvent.title} - {time}</p>
 		{/if}
 	</div>
 	{#if data.links.length !== 0}

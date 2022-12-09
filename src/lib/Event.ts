@@ -5,55 +5,82 @@ export interface IEvent {
 	startDate: Date | null;
 	endDate: Date | null;
 	location: string | null;
-	timeFromNow(): string;
 }
 
-export class ApplicationEvent implements IEvent {
-	title: string;
-	description = '';
-	creationDate = new Date();
-	startDate: Date | null;
-	endDate = null;
-	location = null;
+export function createEvent(
+	title: string,
+	description = '',
+	creationDate = new Date(),
+	startDate: Date | null = null,
+	endDate: Date | null = null,
+	location: string | null = null
+): IEvent {
+	return {
+		title: title,
+		description: description,
+		creationDate: creationDate,
+		startDate: startDate,
+		endDate: endDate,
+		location: location
+	};
+}
 
-	constructor(title: string) {
-		this.title = title;
-		this.startDate = null;
-	}
+export function relativeTimeFormat(event: IEvent, date = new Date()): string {
+	const rtfEn = new Intl.RelativeTimeFormat('en');
 
-	timeFromNow(): string {
-		const rtfEn = new Intl.RelativeTimeFormat('en');
+	const getRelativeTimeFormat = (relativeTime: number) => {
+		const units: Map<Intl.RelativeTimeFormatUnit, number> = new Map([
+			['year', 1000 * 60 * 60 * 24 * 365],
+			['month', (1000 * 60 * 60 * 24 * 365) / 12],
+			['week', 1000 * 60 * 60 * 24 * 7],
+			['day', 1000 * 24 * 60 * 60],
+			['hour', 1000 * 60 * 60],
+			['minute', 1000 * 60]
+		]);
 
-		const getRelativeTimeFormat = (relativeTime: number) => {
-			const units: Map<Intl.RelativeTimeFormatUnit, number> = new Map([
-				['year', 1000 * 60 * 60 * 24 * 365],
-				['month', (1000 * 60 * 60 * 24 * 365) / 12],
-				['week', 1000 * 60 * 60 * 24 * 7],
-				['day', 1000 * 24 * 60 * 60],
-				['hour', 1000 * 60 * 60],
-				['minute', 1000 * 60]
-			]);
-
-			for (const [unit, value] of units) {
-				if (Math.abs(relativeTime) > value) {
-					return rtfEn.format(Math.round(relativeTime / value), unit);
-				}
+		for (const [u, v] of units) {
+			if (Math.abs(relativeTime) > v) {
+				return rtfEn.format(Math.round(relativeTime / v), u);
 			}
-			return rtfEn.format(Math.round(relativeTime / 1000), 'second');
-		};
-
-		const getRelativeTime = (date: Date) => {
-			return date.getTime() - Date.now();
-		};
-
-		if (this.startDate) {
-			return getRelativeTimeFormat(getRelativeTime(this.startDate));
 		}
+		return rtfEn.format(Math.round(relativeTime / 1000), 'second');
+	};
 
-		if (this.endDate) {
-			return getRelativeTimeFormat(getRelativeTime(this.endDate));
-		}
+	const getRelativeTime = (d: Date) => {
+		return d.getTime() - date.getTime();
+	};
 
-		return getRelativeTimeFormat(getRelativeTime(this.creationDate));
+	if (event.startDate) {
+		return getRelativeTimeFormat(getRelativeTime(event.startDate));
 	}
+
+	if (event.endDate) {
+		return getRelativeTimeFormat(getRelativeTime(event.endDate));
+	}
+
+	return getRelativeTimeFormat(getRelativeTime(event.creationDate));
+}
+
+export function getEventRelativeTime(event: IEvent, date = new Date()): number {
+	const getRelativeTime = (d: Date) => {
+		return d.getTime() - date.getTime();
+	};
+	if (!event.startDate && !event.endDate) {
+		return getRelativeTime(event.creationDate);
+	}
+
+	if (!event.startDate && event.endDate) {
+		return getRelativeTime(event.endDate);
+	}
+
+	if (event.startDate && !event.endDate) {
+		return getRelativeTime(event.startDate);
+	}
+
+	const startDateRelativeTime = getRelativeTime(event.startDate as Date);
+	const endDateRelativeTime = getRelativeTime(event.endDate as Date);
+
+	if (startDateRelativeTime < 0) return startDateRelativeTime;
+	if (endDateRelativeTime > 0) return endDateRelativeTime;
+	return 0;
 }
