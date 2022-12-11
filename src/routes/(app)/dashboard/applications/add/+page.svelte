@@ -5,6 +5,8 @@
 	import type { IEvent } from '$lib/Event';
 	import type { Link } from '$lib/Link';
 	import Links from '$lib/components/Application/Links.svelte';
+	import Events from '$lib/components/Application/Events.svelte';
+	import AddLinkForm from './AddLinkForm.svelte';
 
 	let companyName = '';
 	let jobTitle = '';
@@ -18,10 +20,6 @@
 		const creationEvent = createEvent('created application');
 		application.events.push(creationEvent);
 		applicationToFirestore($user.uid, application);
-	};
-
-	const handleAddLink = () => {
-		//TODO: implement
 	};
 
 	const handleAddEvent = () => {
@@ -42,13 +40,7 @@
 <section>
 	<h3>links</h3>
 	<Links {links} />
-	<form on:submit|preventDefault={handleAddLink}>
-		<label for="name">name</label>
-		<input type="text" name="name" id="link-name" />
-		<label for="url">link</label>
-		<input type="url" name="url" id="link-url" />
-		<button type="submit">add link</button>
-	</form>
+	<AddLinkForm bind:links />
 </section>
 <section>
 	<h3>events</h3>
