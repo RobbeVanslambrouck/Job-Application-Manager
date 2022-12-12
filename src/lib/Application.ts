@@ -1,17 +1,26 @@
 import type { Link } from './Link';
 import { db } from '$lib/firebase';
-import { collection, addDoc, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, QueryDocumentSnapshot, doc, setDoc } from 'firebase/firestore';
 import { createEvent, type IEvent } from './Event';
 
 export interface Application {
+	id: string;
 	companyName: string;
 	jobTitle: string;
 	links: Link[];
 	events: IEvent[];
 }
 
-export function createApplication(companyName = '', jobTitle = ''): Application {
+interface ApplicationStore {
+	companyName: string;
+	jobTitle: string;
+	links: Link[];
+	events: IEvent[];
+}
+
+export function createApplication(companyName = '', jobTitle = '', id?: string): Application {
 	return {
+		id: id ?? Date.now().toString(),
 		companyName: companyName,
 		jobTitle: jobTitle,
 		links: [],
@@ -19,12 +28,27 @@ export function createApplication(companyName = '', jobTitle = ''): Application 
 	};
 }
 
+const ApplicationConverter = {
+	toFirestore: (application: Application) => {
+		const { id: _, ...data } = application;
+		return data;
+	},
+	fromFirestore: (snapshot: QueryDocumentSnapshot) => {
+		const data = snapshot.data() as ApplicationStore;
+		const id = snapshot.id;
+		const application = createApplication(data.companyName, data.jobTitle, id);
+		application.links = data.links;
+		application.events = parseStoreEvents(data.events);
+		return application;
+	}
+};
+
 export async function applicationToFirestore(uid: string, application: Application) {
 	try {
-		await addDoc(collection(db, 'applications'), {
-			uid: uid,
-			application: application
-		});
+		const ref = doc(db, 'users', uid, 'applications', application.id).withConverter(
+			ApplicationConverter
+		);
+		await setDoc(ref, application);
 	} catch (error) {
 		console.error(error);
 	}
@@ -33,16 +57,10 @@ export async function applicationToFirestore(uid: string, application: Applicati
 export async function getApplicationsFromFirestore(uid: string): Promise<Application[]> {
 	const applications: Application[] = [];
 	try {
-		const q = query(collection(db, 'applications'), where('uid', '==', uid));
+		const q = query(collection(db, 'users', uid, 'applications'));
 		const querySnapshot = await getDocs(q);
 		querySnapshot.forEach((doc) => {
-			const storeApplication = doc.data().application;
-			const application = createApplication(
-				storeApplication.companyName,
-				storeApplication.jobTitle
-			);
-			application.links = storeApplication.links;
-			application.events = parseStoreEvents(storeApplication.events);
+			const application = ApplicationConverter.fromFirestore(doc);
 			applications.push(application);
 		});
 		return applications;
@@ -52,8 +70,10 @@ export async function getApplicationsFromFirestore(uid: string): Promise<Applica
 	}
 }
 
-function parseStoreEvents(storeEvents: { [key: string]: any }[]): IEvent[] {
+function parseStoreEvents(storeEvents?: { [key: string]: any }[]): IEvent[] {
 	const events: IEvent[] = [];
+	if (!storeEvents) return events;
+
 	for (const store of storeEvents) {
 		const event = createEvent(store.title);
 		event.creationDate = new Date(store.creationDate.seconds * 1000);

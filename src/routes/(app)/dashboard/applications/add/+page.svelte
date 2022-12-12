@@ -18,13 +18,13 @@
 	const handleAddApplication = () => {
 		if (!$user?.uid) return;
 		const application = createApplication(companyName, jobTitle);
-		const creationEvent = createEvent('created application');
-		application.events.push(creationEvent);
+		application.links = links;
+		application.events = events;
+		if (events.length === 0) {
+			const creationEvent = createEvent('created application');
+			application.events.push(creationEvent);
+		}
 		applicationToFirestore($user.uid, application);
-	};
-
-	const handleAddEvent = () => {
-		//TODO: implement
 	};
 </script>
 

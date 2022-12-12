@@ -42,7 +42,7 @@
 			<h4>links</h4>
 			<ul>
 				{#each data.links as link}
-					<li>{link.name}</li>
+					<li><a href={link.url} target="_blank" rel="noreferrer">{link.name}</a></li>
 				{/each}
 			</ul>
 		</div>
