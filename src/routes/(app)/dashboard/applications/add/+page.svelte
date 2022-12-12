@@ -7,6 +7,7 @@
 	import Links from '$lib/components/Application/Links.svelte';
 	import Events from '$lib/components/Application/Events.svelte';
 	import AddLinkForm from './AddLinkForm.svelte';
+	import AddEventForm from './AddEventForm.svelte';
 
 	let companyName = '';
 	let jobTitle = '';
@@ -44,21 +45,8 @@
 </section>
 <section>
 	<h3>events</h3>
-	<p>TODO: create events component</p>
-
-	<form on:submit|preventDefault={handleAddEvent}>
-		<label for="title">title</label>
-		<input type="text" name="title" id="event-title" />
-		<label for="description">description</label>
-		<input type="text" name="description" id="event-description" />
-		<label for="start-time">start time</label>
-		<input type="datetime-local" name="start-time" id="event-start-time" />
-		<label for="end-time">end time</label>
-		<input type="datetime-local" name="end-time" id="event-end-time" />
-		<label for="location">location</label>
-		<input type="text" name="location" id="event-location" />
-		<button type="submit">add event</button>
-	</form>
+	<Events {events} />
+	<AddEventForm bind:events />
 </section>
 <button type="submit" on:click|preventDefault={handleAddApplication}>add application</button>
 
