@@ -1,6 +1,16 @@
 import type { Link } from './Link';
 import { db } from '$lib/firebase';
-import { collection, getDocs, query, QueryDocumentSnapshot, doc, setDoc } from 'firebase/firestore';
+import {
+	collection,
+	getDocs,
+	query,
+	QueryDocumentSnapshot,
+	doc,
+	setDoc,
+	getDoc,
+	DocumentReference,
+	deleteDoc
+} from 'firebase/firestore';
 import { createEvent, type IEvent } from './Event';
 
 export interface Application {
@@ -67,6 +77,34 @@ export async function getApplicationsFromFirestore(uid: string): Promise<Applica
 	} catch (error) {
 		console.error(error);
 		return [];
+	}
+}
+
+export async function getApplicationFromFirestore(
+	uid: string,
+	id: string
+): Promise<Application | undefined> {
+	try {
+		const ref = doc(db, 'users', uid, 'applications', id).withConverter(ApplicationConverter);
+		const snapshot = await getDoc(ref);
+		if (snapshot.exists()) {
+			return snapshot.data();
+		}
+		return undefined;
+	} catch (error) {
+		console.error(error);
+		return undefined;
+	}
+}
+
+export async function deleteApplicationFromFirestore(uid: string, id: string) {
+	try {
+		const ref = doc(db, 'users', uid, 'applications', id);
+		await deleteDoc(ref);
+		return true;
+	} catch (error) {
+		console.log(error);
+		return false;
 	}
 }
 

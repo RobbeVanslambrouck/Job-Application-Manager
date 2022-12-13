@@ -2,11 +2,16 @@
 	import { onMount, onDestroy } from 'svelte';
 	import type { Application } from '$lib/Application';
 	import { getEventRelativeTime, relativeTimeFormat, type IEvent } from '$lib/Event';
+	import 'iconify-icon';
+	import { goto } from '$app/navigation';
 	export let data: Application;
 
 	let lastEvent: IEvent;
 	let interval: string | number | NodeJS.Timer | undefined;
 	$: time = '';
+	let article: HTMLElement;
+	let editLink = `/dashboard/applications/edit?id=${data.id}`;
+
 	onMount(() => {
 		if (data.events.length === 0) return;
 
@@ -27,9 +32,20 @@
 	onDestroy(() => {
 		clearInterval(interval);
 	});
+
+	const handleClick = (e: MouseEvent) => {
+		goto(editLink);
+	};
+
+	const handleKeypress = (e: KeyboardEvent) => {
+		if (e.key === 'Enter') {
+			article.focus();
+			console.log(article);
+		}
+	};
 </script>
 
-<article>
+<article tabindex="-1" on:dblclick={handleClick} bind:this={article}>
 	<h3>{data.jobTitle} at {data.companyName}</h3>
 	<div>
 		<h4 class="sr-only">Latest event</h4>
@@ -47,12 +63,14 @@
 			</ul>
 		</div>
 	{/if}
+	<a href={editLink} class="edit"><iconify-icon inline icon="ic:round-edit" />edit</a>
 </article>
 
 <style>
 	article {
 		padding: 0.8rem 1.2rem;
 		display: flex;
+		align-items: center;
 		gap: 0.4rem;
 		flex-direction: column;
 		background: rgb(var(--md-sys-color-primary-container));
@@ -62,6 +80,10 @@
 		cursor: pointer;
 	}
 
+	article:focus {
+		outline: auto;
+	}
+
 	h3,
 	h4,
 	p {
@@ -69,5 +91,15 @@
 		text-align: center;
 		margin: 0;
 		padding: 0;
+	}
+	.edit {
+		width: 8rem;
+		padding: 0.3rem 0;
+		text-decoration: none;
+		text-align: center;
+		background-color: rgb(var(--md-sys-color-primary));
+		color: rgb(var(--md-sys-color-on-primary));
+		border-radius: var(--app-border-radius);
+		border: none;
 	}
 </style>
