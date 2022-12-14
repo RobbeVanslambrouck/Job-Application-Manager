@@ -3,7 +3,13 @@
 </div>
 
 <style>
+	div {
+		min-width: var(--app-min-application-width);
+		flex: 1;
+		display: flex;
+	}
 	a {
+		flex: 1;
 		display: flex;
 		justify-content: center;
 		align-items: center;

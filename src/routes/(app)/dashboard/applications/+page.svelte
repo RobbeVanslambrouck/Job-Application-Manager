@@ -27,4 +27,8 @@
 		row-gap: 1.6rem;
 		column-gap: 1.6rem;
 	}
+
+	li {
+		display: flex;
+	}
 </style>

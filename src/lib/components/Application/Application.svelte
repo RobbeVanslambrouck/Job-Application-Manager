@@ -54,7 +54,7 @@
 		{/if}
 	</div>
 	{#if data.links.length !== 0}
-		<div>
+		<div class="links">
 			<h4>links</h4>
 			<ul>
 				{#each data.links as link}
@@ -68,6 +68,7 @@
 
 <style>
 	article {
+		flex: 1;
 		padding: 0.8rem 1.2rem;
 		display: flex;
 		align-items: center;
@@ -92,10 +93,34 @@
 		margin: 0;
 		padding: 0;
 	}
+
+	.links {
+		padding: 0.4rem 0;
+	}
+
+	.links {
+		text-transform: capitalize;
+	}
+	.links ul {
+		padding: 0;
+		display: flex;
+		column-gap: 1.5rem;
+		row-gap: 0.4rem;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	.links li {
+		list-style: none;
+	}
+	.links a {
+		color: rgb(var(--md-sys-color-on-primary-container));
+	}
 	.edit {
 		width: 8rem;
 		padding: 0.3rem 0;
+		margin-top: auto;
 		text-decoration: none;
+		text-transform: capitalize;
 		text-align: center;
 		background-color: rgb(var(--md-sys-color-primary));
 		color: rgb(var(--md-sys-color-on-primary));

@@ -142,7 +142,7 @@ body {
 
 :root {
 	--app-border-radius: 1rem;
-	--app-min-application-width: 15rem;
+	--app-min-application-width: 20rem;
 	color-scheme: light dark;
 	--md-sys-typescale-headline1-font: Roboto, Sans;
 	--md-sys-typescale-headline1-weight: Regular;
