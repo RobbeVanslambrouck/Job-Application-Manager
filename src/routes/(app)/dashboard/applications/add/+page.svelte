@@ -8,6 +8,7 @@
 	import Events from '$lib/components/Application/Events.svelte';
 	import AddLinkForm from './AddLinkForm.svelte';
 	import AddEventForm from './AddEventForm.svelte';
+	import { goto } from '$app/navigation';
 
 	let companyName = '';
 	let jobTitle = '';
@@ -15,8 +16,11 @@
 	let links: Link[] = [];
 	let events: IEvent[] = [];
 
-	const handleAddApplication = () => {
+	let addingApplication = false;
+
+	const handleAddApplication = async () => {
 		if (!$user?.uid) return;
+		addingApplication = true;
 		const application = createApplication(companyName, jobTitle);
 		application.links = links;
 		application.events = events;
@@ -24,7 +28,9 @@
 			const creationEvent = createEvent('created application');
 			application.events.push(creationEvent);
 		}
-		applicationToFirestore($user.uid, application);
+		await applicationToFirestore($user.uid, application);
+		addingApplication = false;
+		goto('/dashboard/applications/');
 	};
 </script>
 
@@ -48,7 +54,12 @@
 	<Events {events} />
 	<AddEventForm bind:events />
 </section>
-<button type="submit" on:click|preventDefault={handleAddApplication}>add application</button>
+{#if !addingApplication}
+	<button type="submit" on:click|preventDefault={handleAddApplication}>add application</button>
+{/if}
+{#if addingApplication}
+	<iconify-icon icon="line-md:loading-twotone-loop" />
+{/if}
 
 <style>
 	label {

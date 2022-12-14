@@ -14,16 +14,23 @@
 	let application = data.application;
 	let { companyName, jobTitle, links, events, id } = application;
 
-	const handleEditApplication = () => {
+	let deleting = false;
+	let editing = false;
+
+	const handleEditApplication = async () => {
 		if (!$user?.uid) return;
+		editing = true;
 		application = { companyName, jobTitle, links, events, id };
-		applicationToFirestore($user.uid, application);
+		await applicationToFirestore($user.uid, application);
+		editing = false;
 		goto('/dashboard/applications/');
 	};
 
-	const handleDeleteApplication = () => {
+	const handleDeleteApplication = async () => {
 		if (!$user?.uid) return;
-		deleteApplicationFromFirestore($user.uid, id);
+		deleting = true;
+		await deleteApplicationFromFirestore($user.uid, id);
+		deleting = false;
 		goto('/dashboard/applications/');
 	};
 </script>
@@ -48,12 +55,20 @@
 	<Events {events} />
 	<AddEventForm bind:events />
 </section>
-<button type="button" on:click={handleEditApplication}>done</button>
+{#if !editing}
+	<button type="button" on:click={handleEditApplication}>done</button>
+{/if}
+{#if editing}
+	<iconify-icon icon="line-md:loading-twotone-loop" />
+{/if}
 <form>
 	<label for="delete">i want to delete this application</label>
 	<input type="checkbox" name="delete-application" id="delete" bind:checked={deleteCheckbox} />
-	{#if deleteCheckbox}
+	{#if deleteCheckbox && !deleting}
 		<button type="button" on:click={handleDeleteApplication}>delete</button>
+	{/if}
+	{#if deleting}
+		<iconify-icon icon="line-md:loading-twotone-loop" />
 	{/if}
 </form>
 

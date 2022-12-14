@@ -2,7 +2,6 @@
 	import { onMount, onDestroy } from 'svelte';
 	import type { Application } from '$lib/Application';
 	import { getEventRelativeTime, relativeTimeFormat, type IEvent } from '$lib/Event';
-	import 'iconify-icon';
 	import { goto } from '$app/navigation';
 	export let data: Application;
 
