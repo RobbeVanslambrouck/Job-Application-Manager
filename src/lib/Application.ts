@@ -11,21 +11,21 @@ import {
 	DocumentReference,
 	deleteDoc
 } from 'firebase/firestore';
-import { createEvent, type IEvent } from './Event';
+import { createEvent, type Event } from './Event';
 
 export interface Application {
 	id: string;
 	companyName: string;
 	jobTitle: string;
 	links: Link[];
-	events: IEvent[];
+	events: Event[];
 }
 
 interface ApplicationStore {
 	companyName: string;
 	jobTitle: string;
 	links: Link[];
-	events: IEvent[];
+	events: Event[];
 }
 
 export function createApplication(companyName = '', jobTitle = '', id?: string): Application {
@@ -108,8 +108,8 @@ export async function deleteApplicationFromFirestore(uid: string, id: string) {
 	}
 }
 
-function parseStoreEvents(storeEvents?: { [key: string]: any }[]): IEvent[] {
-	const events: IEvent[] = [];
+function parseStoreEvents(storeEvents?: { [key: string]: any }[]): Event[] {
+	const events: Event[] = [];
 	if (!storeEvents) return events;
 
 	for (const store of storeEvents) {

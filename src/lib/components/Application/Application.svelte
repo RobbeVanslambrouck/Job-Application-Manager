@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import type { Application } from '$lib/Application';
-	import { getEventRelativeTime, relativeTimeFormat, type IEvent } from '$lib/Event';
+	import { getEventRelativeTime, relativeTimeFormat, type Event } from '$lib/Event';
 	import { goto } from '$app/navigation';
 	export let data: Application;
 
-	let lastEvent: IEvent;
+	let lastEvent: Event;
 	let interval: string | number | NodeJS.Timer | undefined;
 	$: time = '';
 	let article: HTMLElement;

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { IEvent } from '$lib/Event';
+	import type { Event } from '$lib/Event';
 
-	export let events: IEvent[];
+	export let events: Event[];
 </script>
 
 <div>

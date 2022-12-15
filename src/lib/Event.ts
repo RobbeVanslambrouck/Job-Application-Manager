@@ -1,4 +1,4 @@
-export interface IEvent {
+export interface Event {
 	title: string;
 	description: string;
 	creationDate: Date;
@@ -14,7 +14,7 @@ export function createEvent(
 	startDate: Date | null = null,
 	endDate: Date | null = null,
 	location: string | null = null
-): IEvent {
+): Event {
 	return {
 		title: title,
 		description: description,
@@ -25,7 +25,7 @@ export function createEvent(
 	};
 }
 
-export function relativeTimeFormat(event: IEvent, date = new Date()): string {
+export function relativeTimeFormat(event: Event, date = new Date()): string {
 	const rtfEn = new Intl.RelativeTimeFormat('en');
 
 	const getRelativeTimeFormat = (relativeTime: number) => {
@@ -61,7 +61,7 @@ export function relativeTimeFormat(event: IEvent, date = new Date()): string {
 	return getRelativeTimeFormat(getRelativeTime(event.creationDate));
 }
 
-export function getEventRelativeTime(event: IEvent, date = new Date()): number {
+export function getEventRelativeTime(event: Event, date = new Date()): number {
 	const getRelativeTime = (d: Date) => {
 		return d.getTime() - date.getTime();
 	};

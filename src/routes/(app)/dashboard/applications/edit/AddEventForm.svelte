@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { createEvent, type IEvent } from '$lib/Event';
+	import { createEvent, type Event } from '$lib/Event';
 
-	export let events: IEvent[] = [];
+	export let events: Event[] = [];
 
 	let title = '';
 	let description = '';

@@ -2,7 +2,7 @@
 	import { applicationToFirestore, createApplication } from '$lib/Application';
 	import { createEvent } from '$lib/Event';
 	import { user } from '$lib/stores/auth';
-	import type { IEvent } from '$lib/Event';
+	import type { Event } from '$lib/Event';
 	import type { Link } from '$lib/Link';
 	import Links from '$lib/components/Application/Links.svelte';
 	import Events from '$lib/components/Application/Events.svelte';
@@ -14,7 +14,7 @@
 	let jobTitle = '';
 
 	let links: Link[] = [];
-	let events: IEvent[] = [];
+	let events: Event[] = [];
 
 	let addingApplication = false;
 
