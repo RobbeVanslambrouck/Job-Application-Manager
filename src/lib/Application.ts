@@ -8,7 +8,6 @@ import {
 	doc,
 	setDoc,
 	getDoc,
-	DocumentReference,
 	deleteDoc
 } from 'firebase/firestore';
 import { createEvent, type Event } from './Event';
@@ -21,11 +20,20 @@ export interface Application {
 	events: Event[];
 }
 
+interface storeEvent {
+	title: string;
+	description: string;
+	creationDate: { seconds: number };
+	startDate: { seconds: number };
+	endDate: { seconds: number };
+	location: string;
+}
+
 interface ApplicationStore {
 	companyName: string;
 	jobTitle: string;
 	links: Link[];
-	events: Event[];
+	events: storeEvent[];
 }
 
 export function createApplication(companyName = '', jobTitle = '', id?: string): Application {
@@ -108,7 +116,7 @@ export async function deleteApplicationFromFirestore(uid: string, id: string) {
 	}
 }
 
-function parseStoreEvents(storeEvents?: { [key: string]: any }[]): Event[] {
+function parseStoreEvents(storeEvents?: storeEvent[]): Event[] {
 	const events: Event[] = [];
 	if (!storeEvents) return events;
 
