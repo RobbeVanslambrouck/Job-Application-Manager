@@ -73,7 +73,7 @@
 		align-items: center;
 		gap: 0.4rem;
 		flex-direction: column;
-		background: rgb(var(--md-sys-color-primary-container));
+		background: rgba(var(--md-sys-color-primary-container), 0.6);
 		color: rgb(var(--md-sys-color-on-primary-container));
 		border-radius: var(--app-border-radius);
 		min-height: 6rem;

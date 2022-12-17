@@ -14,7 +14,7 @@
 		justify-content: center;
 		align-items: center;
 		padding: 0.8rem 1.2rem;
-		background: rgb(var(--md-sys-color-primary-container));
+		background: rgba(var(--md-sys-color-primary-container), 0.6);
 		border-radius: var(--app-border-radius);
 		min-height: 6rem;
 		cursor: pointer;

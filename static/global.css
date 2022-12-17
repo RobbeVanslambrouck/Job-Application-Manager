@@ -27,6 +27,17 @@ body {
 	white-space: nowrap !important; /* 3 */
 }
 
+.app-button {
+	padding: 1.2rem 0.8rem;
+	text-align: center;
+	background-color: rgb(var(--md-sys-color-primary));
+	color: rgb(var(--md-sys-color-on-primary));
+	border-radius: var(--app-border-radius);
+	border: none;
+	cursor: pointer;
+	font-weight: 600;
+}
+
 .headline1,
 .display-small {
 	font-family: var(--md-sys-typescale-headline1-font);

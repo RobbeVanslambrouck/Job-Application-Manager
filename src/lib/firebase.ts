@@ -1,22 +1,31 @@
 import { PUBLIC_FIREBASE_CLIENT_CONFIG } from '$env/static/public';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import {
+	getAuth,
+	GoogleAuthProvider,
+	GithubAuthProvider,
+	signInWithRedirect,
+	signOut
+} from 'firebase/auth';
 
 const firebaseConfig = JSON.parse(PUBLIC_FIREBASE_CLIENT_CONFIG);
 
 const app = initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
-const auth = getAuth(app);
+export const db = getFirestore(app);
+export const auth = getAuth(app);
 
-function loginWithGoogle() {
+export function loginWithGoogle() {
 	const provider = new GoogleAuthProvider();
-	signInWithPopup(auth, provider);
+	signInWithRedirect(auth, provider);
 }
 
-function logout() {
+export function loginWithGithub() {
+	const provider = new GithubAuthProvider();
+	signInWithRedirect(auth, provider);
+}
+
+export function logout() {
 	signOut(auth);
 }
-
-export { db, auth, loginWithGoogle, logout };
