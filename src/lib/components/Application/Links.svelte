@@ -8,7 +8,7 @@
 	<ul>
 		{#each links as link}
 			<li>
-				<a href={link.url}>{link.name}</a>
+				<a href={link.url} target="_blank" rel="noreferrer">{link.name}</a>
 			</li>
 		{/each}
 	</ul>
