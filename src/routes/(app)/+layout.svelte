@@ -3,8 +3,8 @@
 	import { user } from '../../lib/stores/auth';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
-	import Profile from '$lib/components/Nav/Profile.svelte';
-	import Link from '$lib/components/Nav/Link.svelte';
+	import Profile from './Profile.svelte';
+	import Link from './Link.svelte';
 
 	onMount(() => {
 		if (!$user) {

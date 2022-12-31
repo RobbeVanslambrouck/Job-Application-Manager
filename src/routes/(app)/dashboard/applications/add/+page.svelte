@@ -4,8 +4,8 @@
 	import { user } from '$lib/stores/auth';
 	import type { Event } from '$lib/Event';
 	import type { Link } from '$lib/Link';
-	import Links from '$lib/components/Application/Links.svelte';
-	import Events from '$lib/components/Application/Events.svelte';
+	import Links from '../Links.svelte';
+	import Events from '../Events.svelte';
 	import AddLinkForm from './AddLinkForm.svelte';
 	import AddEventForm from './AddEventForm.svelte';
 	import { goto } from '$app/navigation';

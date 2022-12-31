@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import Application from '$lib/components/Application/Application.svelte';
-	import AddApplication from '$lib/components/Application/AddApplication.svelte';
+	import Application from './Application.svelte';
+	import AddApplication from './AddApplication.svelte';
 
 	export let data: PageData;
 	let applications = data.applications;
