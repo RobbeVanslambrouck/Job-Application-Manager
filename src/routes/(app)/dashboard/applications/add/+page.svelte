@@ -6,8 +6,8 @@
 	import type { Link } from '$lib/Link';
 	import Links from '../Links.svelte';
 	import Events from '../Events.svelte';
-	import AddLinkForm from './AddLinkForm.svelte';
-	import AddEventForm from './AddEventForm.svelte';
+	import AddLinkForm from '../AddLinkForm.svelte';
+	import AddEventForm from '../AddEventForm.svelte';
 	import { goto } from '$app/navigation';
 
 	let companyName = '';
