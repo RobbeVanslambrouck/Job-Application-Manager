@@ -9,29 +9,27 @@
 	import { goto } from '$app/navigation';
 
 	export let data: PageData;
-	let deleteCheckbox = false;
+	let { companyName, jobTitle, links, events, id } = data.application;
 
-	let application = data.application;
-	let { companyName, jobTitle, links, events, id } = application;
-
+	let isDeletable = false;
 	let deleting = false;
 	let editing = false;
 
 	const handleEditApplication = async () => {
 		if (!$user?.uid) return;
 		editing = true;
-		application = { companyName, jobTitle, links, events, id };
+		let application = { companyName, jobTitle, links, events, id };
 		await applicationToFirestore($user.uid, application);
-		editing = false;
 		goto('/dashboard/applications/');
+		editing = false;
 	};
 
 	const handleDeleteApplication = async () => {
 		if (!$user?.uid) return;
 		deleting = true;
 		await deleteApplicationFromFirestore($user.uid, id);
-		deleting = false;
 		goto('/dashboard/applications/');
+		deleting = false;
 	};
 </script>
 
@@ -58,19 +56,16 @@
 {#if !editing}
 	<button type="button" on:click={handleEditApplication}>done</button>
 {/if}
-{#if editing}
+{#if !deleting}
+	<form>
+		<label for="delete">i want to delete this application</label>
+		<input type="checkbox" name="delete-application" id="delete" bind:checked={isDeletable} />
+		<button type="button" on:click={handleDeleteApplication} disabled={!isDeletable}>delete</button>
+	</form>
+{/if}
+{#if deleting || editing}
 	<iconify-icon icon="line-md:loading-twotone-loop" />
 {/if}
-<form>
-	<label for="delete">i want to delete this application</label>
-	<input type="checkbox" name="delete-application" id="delete" bind:checked={deleteCheckbox} />
-	{#if deleteCheckbox && !deleting}
-		<button type="button" on:click={handleDeleteApplication}>delete</button>
-	{/if}
-	{#if deleting}
-		<iconify-icon icon="line-md:loading-twotone-loop" />
-	{/if}
-</form>
 
 <style>
 	label {
