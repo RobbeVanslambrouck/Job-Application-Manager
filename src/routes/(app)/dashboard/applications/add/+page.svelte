@@ -2,28 +2,19 @@
 	import { applicationToFirestore, createApplication } from '$lib/Application';
 	import { createEvent } from '$lib/Event';
 	import { user } from '$lib/stores/auth';
-	import type { Event } from '$lib/Event';
-	import type { Link } from '$lib/Link';
 	import Links from '../Links.svelte';
 	import Events from '../Events.svelte';
 	import AddLinkForm from '../AddLinkForm.svelte';
 	import AddEventForm from '../AddEventForm.svelte';
 	import { goto } from '$app/navigation';
 
-	let companyName = '';
-	let jobTitle = '';
-
-	let links: Link[] = [];
-	let events: Event[] = [];
-
+	let { jobTitle, companyName, id, events, links } = createApplication();
 	let addingApplication = false;
 
 	const handleAddApplication = async () => {
 		if (!$user?.uid) return;
 		addingApplication = true;
-		const application = createApplication(companyName, jobTitle);
-		application.links = links;
-		application.events = events;
+		const application = { jobTitle, companyName, id, events, links };
 		if (events.length === 0) {
 			const creationEvent = createEvent('created application');
 			application.events.push(creationEvent);
