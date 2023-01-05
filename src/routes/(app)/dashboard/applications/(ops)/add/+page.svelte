@@ -2,20 +2,16 @@
 	import { applicationToFirestore, createApplication } from '$lib/Application';
 	import { createEvent } from '$lib/Event';
 	import { user } from '$lib/stores/auth';
-	import Links from '../Links.svelte';
-	import Events from '../Events.svelte';
-	import AddLinkForm from '../AddLinkForm.svelte';
-	import AddEventForm from '../AddEventForm.svelte';
 	import { goto } from '$app/navigation';
+	import ApplicationForm from '../ApplicationForm.svelte';
 
-	let { jobTitle, companyName, id, events, links } = createApplication();
+	let application = createApplication();
 	let addingApplication = false;
 
 	const handleAddApplication = async () => {
 		if (!$user?.uid) return;
 		addingApplication = true;
-		const application = { jobTitle, companyName, id, events, links };
-		if (events.length === 0) {
+		if (application.events.length === 0) {
 			const creationEvent = createEvent('created application');
 			application.events.push(creationEvent);
 		}
@@ -26,25 +22,7 @@
 </script>
 
 <h2>add application</h2>
-<section>
-	<h3>application info</h3>
-	<form on:submit|preventDefault={handleAddApplication}>
-		<label for="job-title">job title</label>
-		<input type="text" name="job-title" id="job-title" bind:value={jobTitle} required />
-		<label for="company-name">company</label>
-		<input type="text" name="company-name" id="company-name" bind:value={companyName} required />
-	</form>
-</section>
-<section>
-	<h3>links</h3>
-	<Links {links} />
-	<AddLinkForm bind:links />
-</section>
-<section>
-	<h3>events</h3>
-	<Events {events} />
-	<AddEventForm bind:events />
-</section>
+<ApplicationForm {application} />
 {#if !addingApplication}
 	<button type="submit" on:click|preventDefault={handleAddApplication}>add application</button>
 {/if}
@@ -53,10 +31,6 @@
 {/if}
 
 <style>
-	label {
-		display: block;
-	}
-
 	button {
 		display: block;
 	}
