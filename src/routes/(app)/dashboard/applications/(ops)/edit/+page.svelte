@@ -21,15 +21,14 @@
 </script>
 
 <h2>edit application</h2>
-<ApplicationForm bind:application />
+<ApplicationForm
+	bind:application
+	on:done={() => {
+		handleAction('EDIT');
+	}}
+/>
 {#if !isExecutingAction}
-	<button
-		type="button"
-		on:click={() => {
-			handleAction('EDIT');
-		}}>done</button
-	>
-	<form>
+	<form on:submit|preventDefault>
 		<label for="delete">i want to delete this application</label>
 		<input type="checkbox" name="delete-application" id="delete" bind:checked={isDeletable} />
 		<button
