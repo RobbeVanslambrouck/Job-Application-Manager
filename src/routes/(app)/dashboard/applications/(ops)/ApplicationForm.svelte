@@ -9,16 +9,25 @@
 	export let application = createApplication();
 	export const hideDoneBtnOnDone = true;
 	let hideDoneBtn = false;
-	let hideValidation = true;
-	const dispatch = createEventDispatcher();
+	let hideValidation = false;
+	$: validationMsgs = getValidationMsgs(application);
+	$: isValid = validate(application);
 
-	function validate() {
+	const dispatch = createEventDispatcher();
+	function validate(application: Application) {
 		if (application.companyName === '') return false;
 		if (application.jobTitle === '') return false;
 		return true;
 	}
+
+	function getValidationMsgs(application: Application) {
+		let messages = [];
+		if (application.jobTitle === '') messages.push('job title is required');
+		if (application.companyName === '') messages.push('company name is required');
+		return messages;
+	}
 	function handleAction() {
-		if (!validate()) {
+		if (!isValid) {
 			hideValidation = false;
 			return;
 		}
@@ -34,7 +43,7 @@
 	<form on:submit|preventDefault>
 		<label for="job-title">job title</label>
 		<input type="text" name="job-title" id="job-title" bind:value={application.jobTitle} required />
-		<p class="validation" class:hidden={hideValidation || application.jobTitle !== ''}>
+		<p class="validation" hidden={hideValidation || application.jobTitle !== ''}>
 			job-title is required
 		</p>
 		<label for="company-name">company</label>
@@ -46,7 +55,7 @@
 			bind:value={application.companyName}
 			required
 		/>
-		<p class="validation" class:hidden={hideValidation || application.companyName !== ''}>
+		<p class="validation" hidden={hideValidation || application.companyName !== ''}>
 			company name is required
 		</p>
 	</form>
@@ -62,18 +71,19 @@
 	<AddEventForm bind:events={application.events} />
 </section>
 {#if !hideDoneBtn}
-	<button type="button" on:click|preventDefault={handleAction}>
+	<button type="button" on:click|preventDefault={handleAction} disabled={!isValid}>
 		<slot name="done-button-text">done</slot>
 	</button>
+	{#if !isValid}
+		{#each validationMsgs as msg}
+			<p class="validation">{msg}</p>
+		{/each}
+	{/if}
 {/if}
 
 <style>
 	label {
 		display: block;
-	}
-
-	.hidden {
-		display: none;
 	}
 
 	.validation {
