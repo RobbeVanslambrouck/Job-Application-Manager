@@ -38,6 +38,16 @@ body {
 	font-weight: 600;
 }
 
+.validation {
+	color: rgba(var(--md-sys-color-error));
+	margin: 0;
+	font-family: var(--md-sys-typescale-caption-font);
+	font-weight: var(--md-sys-typescale-caption-weight);
+	font-size: var(--md-sys-typescale-caption-size);
+	line-height: var(--md-sys-typescale-caption-line-height);
+	letter-spacing: var(--md-sys-typescale-caption-tracking);
+}
+
 .headline1,
 .display-small {
 	font-family: var(--md-sys-typescale-headline1-font);

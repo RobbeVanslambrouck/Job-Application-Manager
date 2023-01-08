@@ -86,8 +86,12 @@
 		display: block;
 	}
 
-	.validation {
-		color: rgba(var(--md-sys-color-error));
-		margin: 0;
+	input + .validation {
+		position: absolute;
+	}
+
+	label {
+		text-transform: capitalize;
+		margin-top: 2rem;
 	}
 </style>
