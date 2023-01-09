@@ -50,6 +50,12 @@
 	}
 
 	button {
-		min-width: 10rem;
+		width: 100%;
+	}
+
+	form:invalid button[type='submit'] {
+		background-color: rgba(var(--md-sys-color-error-container));
+		color: rgba(var(--md-sys-color-error));
+		cursor: not-allowed;
 	}
 </style>

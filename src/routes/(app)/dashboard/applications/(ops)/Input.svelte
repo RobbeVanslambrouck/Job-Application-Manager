@@ -62,11 +62,12 @@
 	input {
 		border-color: rgba(var(--md-sys-color-on-surface));
 		border-image: none;
-		border-width: 2px;
+		border-width: 0.2rem;
 		border-radius: 5px;
 		border-style: double;
-		padding: 2px 4px;
+		padding: 0.2rem 0.4rem;
 		margin-bottom: 2rem;
+		width: calc(100% - 1.2rem);
 	}
 
 	input:focus {

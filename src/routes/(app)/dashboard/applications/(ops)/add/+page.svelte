@@ -14,7 +14,7 @@
 	};
 </script>
 
-<h2>add application</h2>
+<h2 class="sr-only">add application</h2>
 <div class="application">
 	<ApplicationForm on:done={handleDone}>
 		<span slot="done-button-text">add</span>

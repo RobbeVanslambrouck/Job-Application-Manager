@@ -39,9 +39,9 @@ button {
 }
 
 button:disabled,
-button[disabled],
-form:invalid button[type='submit'] {
-	background-color: rgba(var(--md-sys-color-error), 0.5);
+button[disabled] {
+	background-color: rgba(var(--md-sys-color-error-container));
+	color: rgba(var(--md-sys-color-error));
 	cursor: not-allowed;
 }
 

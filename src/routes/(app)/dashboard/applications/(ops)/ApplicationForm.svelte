@@ -13,7 +13,6 @@
 	let hideValidation = false;
 	let addingLink = false;
 	let addingEvent = false;
-	$: validationMsgs = getValidationMsgs(application);
 	$: isValid = validate(application);
 
 	const dispatch = createEventDispatcher();
@@ -23,12 +22,6 @@
 		return true;
 	}
 
-	function getValidationMsgs(application: Application) {
-		let messages = [];
-		if (application.jobTitle === '') messages.push('job title is required');
-		if (application.companyName === '') messages.push('company name is required');
-		return messages;
-	}
 	function handleSubmit() {
 		if (!isValid) {
 			hideValidation = false;
@@ -55,8 +48,8 @@
 			{#if addingLink}
 				<AddLinkForm bind:links={application.links} on:done={() => (addingLink = false)} />
 			{:else}
-				<button type="button" class="add-btn" on:click={() => (addingLink = true)}>
-					<i class="material-symbols-rounded">add</i>
+				<button type="button" on:click={() => (addingLink = true)}>
+					<i class="material-symbols-rounded add-btn">add</i>
 				</button>
 			{/if}
 		</section>
@@ -66,8 +59,8 @@
 			{#if addingEvent}
 				<AddEventForm bind:events={application.events} on:done={() => (addingEvent = false)} />
 			{:else}
-				<button type="button" class="add-btn" on:click={() => (addingEvent = true)}>
-					<i class="material-symbols-rounded">add</i>
+				<button type="button" on:click={() => (addingEvent = true)}>
+					<i class="material-symbols-rounded add-btn">add</i>
 				</button>
 			{/if}
 		</section>
@@ -80,31 +73,11 @@
 			>cancel</button
 		>
 	</div>
-	<div>
-		{#if !isValid}
-			{#each validationMsgs as msg}
-				<p class="validation">{msg}</p>
-			{/each}
-		{/if}
-	</div>
 </form>
 
 <style>
-	h3 {
-		margin: 0;
-	}
-
-	.buttons {
-		display: flex;
-		gap: 2.4rem;
-	}
-
-	button {
-		min-width: 10rem;
-	}
-
-	.add-btn {
-		min-width: none;
+	form {
+		width: max-content;
 	}
 
 	.application {
@@ -116,9 +89,27 @@
 		color: rgb(var(--md-sys-color-on-primary-container));
 		border-radius: var(--app-border-radius);
 		margin-bottom: 1.2rem;
+		width: 25rem;
 	}
 
 	h3 {
 		text-transform: capitalize;
+		text-align: center;
+	}
+	.buttons {
+		display: flex;
+		gap: 2.4rem;
+		justify-content: center;
+		align-items: stretch;
+	}
+
+	button {
+		width: 100%;
+	}
+
+	form:invalid button[type='submit'] {
+		background-color: rgba(var(--md-sys-color-error-container));
+		color: rgba(var(--md-sys-color-error));
+		cursor: not-allowed;
 	}
 </style>
