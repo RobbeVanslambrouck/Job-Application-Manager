@@ -15,9 +15,14 @@
 </script>
 
 <h2>add application</h2>
-<ApplicationForm on:done={handleDone}>
-	<p slot="done-button-text">add</p>
-</ApplicationForm>
+<div class="application">
+	<ApplicationForm on:done={handleDone}>
+		<span slot="done-button-text">add</span>
+	</ApplicationForm>
+</div>
 {#if addingApplication}
 	<iconify-icon icon="line-md:loading-twotone-loop" />
 {/if}
+
+<style>
+</style>

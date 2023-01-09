@@ -27,7 +27,7 @@ body {
 	white-space: nowrap !important; /* 3 */
 }
 
-.app-button {
+button {
 	padding: 1.2rem 0.8rem;
 	text-align: center;
 	background-color: rgb(var(--md-sys-color-primary));
@@ -36,6 +36,13 @@ body {
 	border: none;
 	cursor: pointer;
 	font-weight: 600;
+}
+
+button:disabled,
+button[disabled],
+form:invalid button[type='submit'] {
+	background-color: rgba(var(--md-sys-color-error), 0.5);
+	cursor: not-allowed;
 }
 
 .validation {

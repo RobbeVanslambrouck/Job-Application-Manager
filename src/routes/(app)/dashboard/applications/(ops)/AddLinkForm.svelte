@@ -1,32 +1,41 @@
 <script lang="ts">
 	import { createLink, type Link } from '$lib/Link';
+	import { createEventDispatcher } from 'svelte';
+	import Input from './Input.svelte';
 
 	export let links: Link[] = [];
 	let name = '';
 	let url = '';
+
+	const dispatch = createEventDispatcher();
 
 	const handleSubmit = () => {
 		const link = createLink(url, name);
 		name = '';
 		url = '';
 		links = [...links, link];
+
+		dispatch('done');
 	};
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
-	<label for="name">name</label>
-	<input type="text" name="name" id="link-name" bind:value={name} required />
-	<label for="url">link</label>
-	<input type="url" name="url" id="link-url" bind:value={url} required />
-	<button type="submit">add link</button>
+	<Input label="name" required={true} bind:value={name} />
+	<Input type="url" label="URL" required={true} bind:value={url} />
+	<div class="buttons">
+		<button type="submit">add link</button>
+		<button type="button" on:click={() => dispatch('done')}>cancel</button>
+	</div>
 </form>
 
 <style>
-	label {
-		display: block;
+	.buttons {
+		display: flex;
+		gap: 2.4rem;
 	}
 
 	button {
 		display: block;
+		min-width: 10rem;
 	}
 </style>
