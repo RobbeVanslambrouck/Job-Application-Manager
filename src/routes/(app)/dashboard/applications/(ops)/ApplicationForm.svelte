@@ -95,6 +95,7 @@
 	h3 {
 		text-transform: capitalize;
 		text-align: center;
+		margin-bottom: 0.4rem;
 	}
 	.buttons {
 		display: flex;

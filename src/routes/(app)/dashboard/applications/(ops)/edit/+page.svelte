@@ -20,7 +20,7 @@
 	};
 </script>
 
-<h2>edit application</h2>
+<h2 class="sr-only">edit application</h2>
 <ApplicationForm
 	bind:application
 	on:done={() => {
