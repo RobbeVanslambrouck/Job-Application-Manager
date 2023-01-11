@@ -1,22 +1,32 @@
 <script lang="ts">
 	import type { Application } from '$lib/Application';
 	import { goto } from '$app/navigation';
+	import { user } from '$lib/stores/auth';
 	import Links from './Links.svelte';
 	import Events from './Events.svelte';
-	export let data: Application;
+	export let application: Application;
 
-	let editLink = `/dashboard/applications/edit?id=${data.id}`;
+	let { id, jobTitle, companyName, links, events } = application;
 
-	const handleClick = (e: MouseEvent) => {
+	let editLink = `/dashboard/applications/edit?id=${id}`;
+	let deleteLink = `/dashboard/applications/delete?id=${id}`;
+
+	const handleDblClick = (e: MouseEvent) => {
 		goto(editLink);
 	};
 </script>
 
-<article tabindex="-1" on:dblclick={handleClick}>
-	<h3>{data.jobTitle} at {data.companyName}</h3>
-	<Events events={data.events} />
-	<Links links={data.links} />
-	<a href={editLink} class="edit"><iconify-icon inline icon="ic:round-edit" />edit</a>
+<article tabindex="-1" on:dblclick={handleDblClick}>
+	<h3>{jobTitle} at {companyName}</h3>
+	<Events {events} />
+	<Links {links} />
+	<div class="actions">
+		<a href={editLink} class="action-link"><iconify-icon inline icon="ic:round-edit" />edit</a>
+
+		<a href={deleteLink} class="action-link">
+			<iconify-icon inline icon="ic:round-delete" />delete
+		</a>
+	</div>
 </article>
 
 <style>
@@ -44,7 +54,12 @@
 		margin: 0;
 		padding: 0;
 	}
-	.edit {
+
+	.actions {
+		display: flex;
+		gap: 1.2rem;
+	}
+	.action-link {
 		width: 8rem;
 		padding: 0.3rem 0;
 		margin-top: auto;

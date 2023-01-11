@@ -12,7 +12,7 @@
 	<ul>
 		<li><AddApplication /></li>
 		{#each applications as application}
-			<li><Application data={application} /></li>
+			<li><Application {application} /></li>
 		{/each}
 	</ul>
 </section>
