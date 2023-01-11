@@ -41,6 +41,7 @@
 		color: rgb(var(--md-sys-color-on-primary-container));
 		border-radius: var(--app-border-radius);
 		min-height: 6rem;
+		max-width: 50rem;
 		cursor: pointer;
 	}
 
@@ -56,6 +57,7 @@
 	}
 
 	.actions {
+		margin-top: auto;
 		display: flex;
 		gap: 1.2rem;
 	}
