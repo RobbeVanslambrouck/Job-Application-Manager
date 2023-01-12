@@ -60,6 +60,8 @@
 		margin-top: auto;
 		display: flex;
 		gap: 1.2rem;
+		width: 100%;
+		justify-content: space-around;
 	}
 	.action-link {
 		width: 8rem;
@@ -71,6 +73,5 @@
 		background-color: rgb(var(--md-sys-color-primary));
 		color: rgb(var(--md-sys-color-on-primary));
 		border-radius: var(--app-border-radius);
-		border: none;
 	}
 </style>
