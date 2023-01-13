@@ -10,9 +10,10 @@
 
 	let editLink = `/dashboard/applications/edit?id=${id}`;
 	let deleteLink = `/dashboard/applications/delete?id=${id}`;
+	let viewLink = `/dashboard/applications/application?id=${id}`;
 
 	const handleDblClick = (e: MouseEvent) => {
-		goto(editLink);
+		goto(viewLink);
 	};
 </script>
 
