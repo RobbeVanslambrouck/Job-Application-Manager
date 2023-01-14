@@ -19,7 +19,7 @@
 
 <article tabindex="-1" on:dblclick={handleDblClick}>
 	<h3>{jobTitle} at {companyName}</h3>
-	<Events {events} />
+	<Events {events} numberOf={1} />
 	<Links {links} />
 	<div class="actions">
 		<a href={editLink} class="action-link"><iconify-icon inline icon="ic:round-edit" />edit</a>

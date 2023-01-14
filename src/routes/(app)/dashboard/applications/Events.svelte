@@ -3,23 +3,32 @@
 	import { onDestroy, onMount } from 'svelte';
 
 	export let events: Event[];
-	let lastEvent: Event;
-	let timeStr = '';
+	export let numberOf = Infinity;
+	export let order: 'ASC' | 'DEC' = 'ASC';
+	let shownEvents: Event[];
 	let interval: number | NodeJS.Timer;
+	let intervalTime: number;
 
+	shownEvents = events.sort((a, b) => {
+		let at = Math.max(a.creationDate.valueOf(), a.startDate ? a.startDate.valueOf() : 0);
+		let bt = Math.max(b.creationDate.valueOf(), b.startDate ? b.startDate.valueOf() : 0);
+		return order === 'DEC' ? bt - at : at - bt;
+	});
+
+	shownEvents = shownEvents.filter((e, i) => {
+		return i < numberOf;
+	});
 	onMount(() => {
-		if (events.length === 0) return;
+		if (events.length === 0 || numberOf === 0) return;
 
-		lastEvent = events[events.length - 1];
-		timeStr = relativeTimeFormat(lastEvent);
-
-		let rt = Math.abs(getEventRelativeTime(lastEvent));
-		let timer = 1000;
-		if (rt > 1000 * 60) timer = 1000 * 60;
-		else if (rt > 1000 * 60 * 60) timer = 1000 * 60 * 60;
-		interval = setInterval(() => {
-			timeStr = relativeTimeFormat(lastEvent);
-		}, timer);
+		// interval = setInterval(() => {
+		// 	shownEvents;
+		// 	intervalTime = shownEvents.reduce((p, c) => {
+		// 		let relTime = Math.abs(getEventRelativeTime(c));
+		// 		let minInterval = relTime < 1000 ? 1000 : relTime < 60_000 ? 60_000 : 3_600_000;
+		// 		return Math.min(p, minInterval);
+		// 	}, 3_600_000);
+		// }, intervalTime);
 	});
 
 	onDestroy(() => {
@@ -28,10 +37,12 @@
 	});
 </script>
 
-{#if lastEvent}
+{#if events.length > 0 && numberOf > 0}
 	<section>
-		<h4 class="sr-only">Latest event</h4>
-		<p>{lastEvent.title} - {timeStr}</p>
+		<h4 class="sr-only">events</h4>
+		{#each shownEvents as event}
+			<p>{event.title} - {relativeTimeFormat(event)}</p>
+		{/each}
 	</section>
 {/if}
 
