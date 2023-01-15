@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { Application } from '$lib/Application';
 	import { goto } from '$app/navigation';
-	import { user } from '$lib/stores/auth';
 	import Links from './Links.svelte';
 	import Events from './Events.svelte';
 	export let application: Application;
+	export let type: 'SUMMARY' | 'FULL' = 'FULL';
 
 	let { id, jobTitle, companyName, links, events } = application;
 
@@ -19,7 +19,12 @@
 
 <article tabindex="-1" on:dblclick={handleDblClick}>
 	<h3>{jobTitle} at {companyName}</h3>
-	<Events {events} numberOf={1} />
+	{#if type === 'SUMMARY'}
+		<Events {events} numberOf={1} type="SUMMARY" />
+	{/if}
+	{#if type === 'FULL'}
+		<Events {events} />
+	{/if}
 	<Links {links} />
 	<div class="actions">
 		<a href={editLink} class="action-link"><iconify-icon inline icon="ic:round-edit" />edit</a>

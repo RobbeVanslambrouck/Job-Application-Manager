@@ -4,7 +4,7 @@
 	import AddApplication from './AddApplication.svelte';
 
 	export let data: PageData;
-	let applications = data.applications;
+	let applications = data.applications.sort((a, b) => parseInt(b.id) - parseInt(a.id));
 </script>
 
 <section>
@@ -12,7 +12,7 @@
 	<ul>
 		<li><AddApplication /></li>
 		{#each applications as application}
-			<li><Application {application} /></li>
+			<li><Application {application} type="SUMMARY" /></li>
 		{/each}
 	</ul>
 </section>
