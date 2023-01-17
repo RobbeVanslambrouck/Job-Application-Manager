@@ -1,8 +1,7 @@
 <script lang="ts">
 	import Links from './Links.svelte';
 	import Events from './Events.svelte';
-	import AddLinkForm from './AddLinkForm.svelte';
-	import EventForm from './EventForm.svelte';
+	import LinkForm from './LinkForm.svelte';
 	import Input from './Input.svelte';
 	import { createApplication, type Application } from '$lib/Application';
 	import { createEventDispatcher } from 'svelte';
@@ -48,13 +47,6 @@
 		<section>
 			<h3>links</h3>
 			<Links links={application.links} />
-			{#if addingLink}
-				<AddLinkForm bind:links={application.links} on:done={() => (addingLink = false)} />
-			{:else}
-				<button type="button" on:click={() => (addingLink = true)}>
-					<i class="material-symbols-rounded add-btn">add</i>
-				</button>
-			{/if}
 		</section>
 		<section>
 			<h3>events</h3>

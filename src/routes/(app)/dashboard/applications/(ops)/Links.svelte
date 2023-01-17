@@ -1,40 +1,77 @@
 <script lang="ts">
-	import type { Link } from '$lib/Link';
+	import { createLink, type Link } from '$lib/Link';
+	import EditLink from './EditLink.svelte';
+	import LinkForm from './LinkForm.svelte';
 
 	export let links: Link[];
+
+	let showForm = false;
+	let formLink = createLink('');
+	let action: 'ADD' | 'EDIT' = 'ADD';
+	let editIndex = -1;
+
+	function handleDelete(index: number) {
+		links.splice(index, 1);
+		links = links;
+	}
+
+	function handleEdit(index: number) {
+		editIndex = index;
+		formLink = { ...links[index] };
+		showForm = true;
+		action = 'EDIT';
+	}
+
+	function handleDone() {
+		if (action === 'ADD') links = [...links, formLink];
+		if (action === 'EDIT' && editIndex !== -1) links[editIndex] = formLink;
+		closeForm();
+	}
+	function closeForm() {
+		action = 'ADD';
+		showForm = false;
+		formLink = createLink('');
+	}
 </script>
 
-<div class="links">
+<div>
 	<ul>
-		{#each links as link}
+		{#each links as link, index}
 			<li>
-				<a href={link.url} target="_blank" rel="noreferrer">{link.name}</a>
+				<EditLink
+					{link}
+					on:edit={() => {
+						handleEdit(index);
+					}}
+					on:delete={() => {
+						handleDelete(index);
+					}}
+				/>
 			</li>
 		{/each}
 	</ul>
 </div>
 
-<style>
-	.links {
-		padding: 0.4rem 0;
-	}
+{#if showForm}
+	<LinkForm bind:link={formLink} on:done={handleDone} on:cancel={closeForm} {action} />
+{:else}
+	<button type="button" on:click={() => (showForm = true)}>
+		<i class="material-symbols-rounded add-btn">add</i>
+	</button>
+{/if}
 
-	.links {
+<style>
+	ul {
+		padding: 0;
+	}
+	li {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 0.4rem;
 		text-transform: capitalize;
 	}
-	.links ul {
-		padding: 0;
-		margin: 0;
-		display: flex;
-		column-gap: 1.5rem;
-		row-gap: 0.4rem;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
-	.links li {
-		list-style: none;
-	}
-	.links a {
-		color: rgb(var(--md-sys-color-on-primary-container));
+
+	button {
+		width: 100%;
 	}
 </style>
