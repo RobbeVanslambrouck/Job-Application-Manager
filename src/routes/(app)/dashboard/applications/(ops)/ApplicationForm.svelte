@@ -2,17 +2,20 @@
 	import Links from './Links.svelte';
 	import Events from './Events.svelte';
 	import AddLinkForm from './AddLinkForm.svelte';
-	import AddEventForm from './AddEventForm.svelte';
+	import EventForm from './EventForm.svelte';
 	import Input from './Input.svelte';
 	import { createApplication, type Application } from '$lib/Application';
 	import { createEventDispatcher } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { createEvent } from '$lib/Event';
 
 	export let application = createApplication();
 	let hideButtons = false;
 	let hideValidation = false;
 	let addingLink = false;
 	let addingEvent = false;
+	let eventEditIndex = -1;
+	let formEvent = createEvent('');
 	$: isValid = validate(application);
 
 	const dispatch = createEventDispatcher();
@@ -56,13 +59,6 @@
 		<section>
 			<h3>events</h3>
 			<Events events={application.events} />
-			{#if addingEvent}
-				<AddEventForm bind:events={application.events} on:done={() => (addingEvent = false)} />
-			{:else}
-				<button type="button" on:click={() => (addingEvent = true)}>
-					<i class="material-symbols-rounded add-btn">add</i>
-				</button>
-			{/if}
 		</section>
 	</div>
 	<div class="buttons">

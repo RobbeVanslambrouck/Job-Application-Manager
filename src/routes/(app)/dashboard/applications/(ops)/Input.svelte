@@ -5,6 +5,7 @@
 	export let value = '';
 	export let placeholder = '';
 	export let required = false;
+	export let focus = false;
 	export let type: 'text' | 'url' | 'email' | 'datetime-local' = 'text';
 
 	function typeAction(node: HTMLInputElement) {
@@ -23,6 +24,7 @@
 
 	onMount(() => {
 		validate();
+		if (focus) input.focus();
 	});
 </script>
 
