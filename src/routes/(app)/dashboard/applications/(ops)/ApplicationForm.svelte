@@ -46,11 +46,11 @@
 		</section>
 		<section>
 			<h3>links</h3>
-			<Links links={application.links} />
+			<Links bind:links={application.links} />
 		</section>
 		<section>
 			<h3>events</h3>
-			<Events events={application.events} />
+			<Events bind:events={application.events} />
 		</section>
 	</div>
 	<div class="buttons">

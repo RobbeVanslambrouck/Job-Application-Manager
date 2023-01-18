@@ -4,10 +4,9 @@
 	import LinkForm from './LinkForm.svelte';
 
 	export let links: Link[];
-
-	let showForm = false;
 	let formLink = createLink('');
 	let action: 'ADD' | 'EDIT' = 'ADD';
+	let showForm = false;
 	let editIndex = -1;
 
 	function handleDelete(index: number) {
@@ -27,6 +26,7 @@
 		if (action === 'EDIT' && editIndex !== -1) links[editIndex] = formLink;
 		closeForm();
 	}
+
 	function closeForm() {
 		action = 'ADD';
 		showForm = false;
