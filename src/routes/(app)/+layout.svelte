@@ -33,11 +33,11 @@
 					<Link url="/dashboard/applications" googleIcon="grid_view">applications</Link>
 				</li>
 				<li>
-					<Link url="/dashboard/interim" googleIcon="person_search">interim</Link>
+					<Link url="/dashboard/recruitment" googleIcon="person_search">recruitment agencies</Link>
 				</li>
-				<li>
+				<!-- <li>
 					<Link url="/dashboard/settings" googleIcon="settings">settings</Link>
-				</li>
+				</li> -->
 			</ul>
 		</nav>
 	</aside>

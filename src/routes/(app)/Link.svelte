@@ -16,7 +16,9 @@
 		display: flex;
 		gap: 2.4rem;
 		text-decoration: none;
+		align-items: center;
 		color: rgb(var(--md-sys-color-on-background));
+		text-transform: capitalize;
 	}
 
 	div {
