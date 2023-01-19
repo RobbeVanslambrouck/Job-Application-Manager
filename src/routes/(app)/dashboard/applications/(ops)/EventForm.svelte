@@ -1,21 +1,12 @@
 <script lang="ts">
 	import type { Event } from '$lib/Event';
 	import { createEventDispatcher } from 'svelte';
-	import { onMount, onDestroy } from 'svelte';
 	import Input from './Input.svelte';
-
-	const dispatch = createEventDispatcher();
 
 	export let event: Event;
 	export let action: 'ADD' | 'EDIT';
 
-	let start = '';
-	let end = '';
-	let loc = '';
-
-	$: if (start !== '') event.startDate = new Date(start);
-	$: if (end !== '') event.endDate = new Date(end);
-	$: if (loc !== '') event.location = loc;
+	const dispatch = createEventDispatcher();
 
 	const handleSubmit = () => {
 		dispatch('done');
@@ -25,9 +16,9 @@
 <form on:submit|preventDefault={handleSubmit}>
 	<Input label="name" required={true} bind:value={event.title} focus={true} />
 	<Input label="description" bind:value={event.description} />
-	<Input type="datetime-local" label="start-time" bind:value={start} />
-	<Input type="datetime-local" label="end-time" bind:value={end} />
-	<Input label="location" bind:value={loc} />
+	<Input type="datetime-local" label="start-time" bind:value={event.startDate} />
+	<Input type="datetime-local" label="end-time" bind:value={event.endDate} />
+	<Input label="location" bind:value={event.location} />
 	<div class="buttons">
 		<button type="submit">{action === 'ADD' ? 'add' : 'edit'} event</button>
 		<button
