@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { applicationToFirestore, createApplication } from '$lib/Application';
+	import { applicationToFirestore } from '$lib/Application';
 	import { user } from '$lib/stores/auth';
 	import { goto } from '$app/navigation';
 	import ApplicationForm from '../ApplicationForm.svelte';

@@ -1,20 +1,13 @@
 <script lang="ts">
 	import Links from './Links.svelte';
 	import Events from './Events.svelte';
-	import LinkForm from './LinkForm.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import { createApplication, type Application } from '$lib/Application';
 	import { createEventDispatcher } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { createEvent } from '$lib/Event';
 
 	export let application = createApplication();
 	let hideButtons = false;
-	let hideValidation = false;
-	let addingLink = false;
-	let addingEvent = false;
-	let eventEditIndex = -1;
-	let formEvent = createEvent('');
 	$: isValid = validate(application);
 
 	const dispatch = createEventDispatcher();
@@ -25,16 +18,12 @@
 	}
 
 	function handleSubmit() {
-		if (!isValid) {
-			hideValidation = false;
-			return;
-		}
+		if (!isValid) return;
 		hideButtons = true;
 		dispatch('done', {
 			application: application
 		});
 	}
-	let value: string;
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
