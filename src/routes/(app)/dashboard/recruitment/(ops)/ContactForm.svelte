@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Contact } from '$lib/recruitmentAgency';
 	import { createEventDispatcher } from 'svelte';
-	import Input from './Input.svelte';
+	import Input from '$lib/components/Input.svelte';
 
 	export let contact: Contact;
 	export let action: 'ADD' | 'EDIT';

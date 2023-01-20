@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Link } from '$lib/Link';
 	import { createEventDispatcher } from 'svelte';
-	import Input from './Input.svelte';
+	import Input from '$lib/components/Input.svelte';
 
 	export let link: Link;
 	export let action: 'ADD' | 'EDIT';

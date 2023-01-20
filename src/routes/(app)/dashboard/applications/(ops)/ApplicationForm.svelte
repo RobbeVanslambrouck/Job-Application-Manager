@@ -2,7 +2,7 @@
 	import Links from './Links.svelte';
 	import Events from './Events.svelte';
 	import LinkForm from './LinkForm.svelte';
-	import Input from './Input.svelte';
+	import Input from '$lib/components/Input.svelte';
 	import { createApplication, type Application } from '$lib/Application';
 	import { createEventDispatcher } from 'svelte';
 	import { goto } from '$app/navigation';

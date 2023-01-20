@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Event } from '$lib/Event';
 	import { createEventDispatcher } from 'svelte';
-	import Input from './Input.svelte';
+	import Input from '$lib/components/Input.svelte';
 
 	export let event: Event;
 	export let action: 'ADD' | 'EDIT';

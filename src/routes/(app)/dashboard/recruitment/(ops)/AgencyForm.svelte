@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Contacts from './Contacts.svelte';
-	import Input from './Input.svelte';
+	import Input from '$lib/components/Input.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { createRecruitmentAgency, type RecruitmentAgency } from '$lib/recruitmentAgency';

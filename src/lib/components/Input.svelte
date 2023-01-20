@@ -7,7 +7,7 @@
 	export let placeholder = '';
 	export let required = false;
 	export let focus = false;
-	export let type: 'text' | 'url' | 'email' | 'datetime-local' = 'text';
+	export let type: 'text' | 'url' | 'email' | 'datetime-local' | 'tel' = 'text';
 
 	let internalValue = '';
 
