@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { Contact } from '$lib/recruitmentAgency';
+	import type { Company } from '$lib/recruitmentAgency';
 	import { createEventDispatcher } from 'svelte';
 
-	export let contact: Contact;
+	export let company: Company;
 
 	let dispatch = createEventDispatcher();
 
@@ -14,7 +14,7 @@
 	}
 </script>
 
-<p>{contact.name}</p>
+<p>{company.name}</p>
 <div class="buttons">
 	<button type="button" on:click={handleEdit}>
 		<iconify-icon inline icon="ic:round-edit" />

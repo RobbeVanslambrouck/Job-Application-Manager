@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Contacts from './Contacts.svelte';
+	import Companies from './Companies.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { goto } from '$app/navigation';
@@ -7,7 +8,6 @@
 
 	export let agency: RecruitmentAgency = createRecruitmentAgency();
 	let hideButtons = false;
-	let hideValidation = false;
 	$: isValid = validate(agency);
 
 	const dispatch = createEventDispatcher();
@@ -17,10 +17,7 @@
 	}
 
 	function handleSubmit() {
-		if (!isValid) {
-			hideValidation = false;
-			return;
-		}
+		if (!isValid) return;
 		hideButtons = true;
 		dispatch('done', {
 			recruitmentAgency: agency
@@ -37,6 +34,10 @@
 		<section>
 			<h3>contacts</h3>
 			<Contacts bind:contacts={agency.contacts} />
+		</section>
+		<section>
+			<h3>companies</h3>
+			<Companies bind:companies={agency.proposedCompanies} />
 		</section>
 	</div>
 	<div class="buttons">
