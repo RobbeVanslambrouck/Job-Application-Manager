@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import AddAgency from './AddAgency.svelte';
 	import Agency from './Agency.svelte';
 
 	export let data: PageData;
@@ -10,12 +11,10 @@
 <h2>recruitment agencies</h2>
 
 <ul>
-	<div>
-		<a href="/dashboard/recruitment/add"><i class="material-symbols-rounded">add</i></a>
-	</div>
 	{#each agencies as agency}
 		<li><Agency {agency} /></li>
 	{/each}
+	<AddAgency />
 </ul>
 
 <style>
