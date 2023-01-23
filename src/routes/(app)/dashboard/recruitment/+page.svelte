@@ -8,7 +8,7 @@
 	let agencies = data.agencies;
 </script>
 
-<h2>recruitment agencies</h2>
+<h2 class="sr-only">recruitment agencies</h2>
 
 <ul>
 	{#each agencies as agency}
@@ -20,5 +20,9 @@
 <style>
 	h2 {
 		text-transform: capitalize;
+	}
+
+	ul {
+		list-style: none;
 	}
 </style>
