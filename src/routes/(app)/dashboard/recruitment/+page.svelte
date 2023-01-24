@@ -24,5 +24,7 @@
 
 	ul {
 		list-style: none;
+		display: grid;
+		gap: 1.2rem;
 	}
 </style>

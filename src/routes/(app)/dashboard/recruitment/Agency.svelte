@@ -14,6 +14,15 @@
 </script>
 
 <article tabindex="-1" on:dblclick={handleDblClick}>
+	<div class="actions">
+		<a href={`/dashboard/recruitment/edit?name=${name}`} class="action-link"
+			><iconify-icon inline icon="ic:round-edit" /></a
+		>
+
+		<a href={`/dashboard/recruitment/delete?name=${name}`} class="action-link">
+			<iconify-icon inline icon="ic:round-delete" />
+		</a>
+	</div>
 	<h3>{name}</h3>
 	<Contacts {contacts} />
 	<Companies {companies} />
@@ -22,5 +31,24 @@
 <style>
 	article {
 		cursor: pointer;
+		padding: 0.8rem 1.2rem;
+		background: rgba(var(--md-sys-color-primary-container), 0.6);
+		color: rgb(var(--md-sys-color-on-primary-container));
+		border-radius: var(--app-border-radius);
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+	}
+
+	a {
+		width: 8rem;
+		padding: 0.3rem;
+		margin-top: auto;
+		text-decoration: none;
+		text-transform: capitalize;
+		text-align: center;
+		background-color: rgb(var(--md-sys-color-primary));
+		color: rgb(var(--md-sys-color-on-primary));
+		border-radius: var(--app-border-radius);
 	}
 </style>
