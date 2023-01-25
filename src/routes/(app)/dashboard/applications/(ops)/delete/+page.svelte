@@ -19,10 +19,10 @@
 	}
 </script>
 
+<h2 class="sr-only">Delete Application</h2>
 <div>
 	<Application {application} />
 </div>
-<h2 class="sr-only">Delete Application</h2>
 <p class="body-large">Are you sure u want to delete this application?</p>
 <div>
 	<button type="button" on:click={handleDelete} class="delete"
