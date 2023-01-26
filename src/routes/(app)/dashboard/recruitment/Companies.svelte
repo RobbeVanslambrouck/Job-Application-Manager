@@ -6,7 +6,7 @@
 
 {#if companies.length !== 0}
 	<section>
-		<h4>contacts</h4>
+		<h4>companies</h4>
 		<ul>
 			{#each companies as company}
 				<li>
