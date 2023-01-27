@@ -15,9 +15,9 @@
 
 <article tabindex="-1" on:dblclick={handleDblClick}>
 	<div class="actions">
-		<a href={`/dashboard/recruitment/edit?name=${name}`} class="action-link"
-			><iconify-icon inline icon="ic:round-edit" /></a
-		>
+		<a href={`/dashboard/recruitment/edit?name=${name}`} class="action-link">
+			<iconify-icon inline icon="ic:round-edit" />
+		</a>
 
 		<a href={`/dashboard/recruitment/delete?name=${name}`} class="action-link">
 			<iconify-icon inline icon="ic:round-delete" />
@@ -36,6 +36,7 @@
 		color: rgb(var(--md-sys-color-on-primary-container));
 		border-radius: var(--app-border-radius);
 		display: flex;
+		justify-content: space-between;
 		align-items: center;
 		gap: 0.4rem;
 	}
@@ -50,5 +51,9 @@
 		background-color: rgb(var(--md-sys-color-primary));
 		color: rgb(var(--md-sys-color-on-primary));
 		border-radius: var(--app-border-radius);
+	}
+
+	h3 {
+		justify-self: left;
 	}
 </style>

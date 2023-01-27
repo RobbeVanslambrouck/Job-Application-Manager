@@ -11,8 +11,18 @@
 			{#each contacts as contact}
 				<li>
 					<p>{contact.name}</p>
-					<p>{contact.phone}</p>
-					<p>{contact.email}</p>
+					{#if contact.phone}
+						<div>
+							<iconify-icon inline icon="ic:round-phone" />
+							<p>{contact.phone}</p>
+						</div>
+					{/if}
+					{#if contact.email}
+						<div class="mail">
+							<iconify-icon inline icon="ic:round-email" />
+							<p>{contact.email}</p>
+						</div>
+					{/if}
 				</li>
 			{/each}
 		</ul>
@@ -44,7 +54,13 @@
 		list-style: none;
 	}
 
-	a {
-		color: rgb(var(--md-sys-color-on-primary-container));
+	p {
+		display: inline-block;
+
+		margin: 0.4rem 0;
+	}
+
+	.mail {
+		text-transform: initial;
 	}
 </style>

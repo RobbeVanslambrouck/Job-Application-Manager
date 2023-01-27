@@ -26,5 +26,6 @@
 		list-style: none;
 		display: grid;
 		gap: 1.2rem;
+		padding: 0;
 	}
 </style>
