@@ -35,8 +35,8 @@
 		background: rgba(var(--md-sys-color-primary-container), 0.6);
 		color: rgb(var(--md-sys-color-on-primary-container));
 		border-radius: var(--app-border-radius);
-		display: flex;
-		justify-content: space-between;
+		display: grid;
+		grid-template-columns: min-content min-content 1fr 1fr;
 		align-items: center;
 		gap: 0.4rem;
 	}
@@ -54,6 +54,18 @@
 	}
 
 	h3 {
-		justify-self: left;
+		margin-left: 0;
+	}
+
+	.actions {
+		display: flex;
+		gap: 0.4rem;
+	}
+	.action-link {
+		width: 2.5rem;
+		padding: 0.3rem 0;
+		background-color: rgb(var(--md-sys-color-primary));
+		color: rgb(var(--md-sys-color-on-primary));
+		border-radius: var(--app-border-radius);
 	}
 </style>
