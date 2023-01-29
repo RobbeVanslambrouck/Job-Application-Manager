@@ -68,4 +68,11 @@
 		color: rgb(var(--md-sys-color-on-primary));
 		border-radius: var(--app-border-radius);
 	}
+
+	@media only screen and (max-width: 50rem) {
+		article {
+			display: flex;
+			flex-direction: column;
+		}
+	}
 </style>
