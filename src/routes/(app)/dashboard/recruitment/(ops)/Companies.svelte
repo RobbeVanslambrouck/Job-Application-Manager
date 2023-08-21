@@ -1,50 +1,50 @@
 <script lang="ts">
-	import { createEvent, type Event } from '$lib/Event';
-	import EditEvent from './EditEvent.svelte';
-	import EventForm from './EventForm.svelte';
+	import { createCompany, type Company } from '$lib/recruitmentAgency';
+	import EditCompany from './EditCompany.svelte';
+	import CompanyForm from './CompanyForm.svelte';
 
-	export let events: Event[];
-	let formEvent = createEvent('');
+	export let companies: Company[];
+	let formCompany = createCompany('');
 	let action: 'ADD' | 'EDIT' = 'ADD';
 	let showForm = false;
 	let editIndex = -1;
 
 	function handleDelete(index: number) {
-		events.splice(index, 1);
-		events = events;
+		companies.splice(index, 1);
+		companies = companies;
 	}
 
 	function handleEdit(index: number) {
 		editIndex = index;
-		formEvent = { ...events[index] };
+		formCompany = { ...companies[index] };
 		showForm = true;
 		action = 'EDIT';
 	}
 
 	function handleDone() {
-		if (action === 'ADD') events = [...events, formEvent];
-		if (action === 'EDIT' && editIndex !== -1) events[editIndex] = formEvent;
+		if (action === 'ADD') companies = [...companies, formCompany];
+		if (action === 'EDIT' && editIndex !== -1) companies[editIndex] = formCompany;
 		closeForm();
 	}
 
 	function closeForm() {
 		action = 'ADD';
 		showForm = false;
-		formEvent = createEvent('');
+		formCompany = createCompany('');
 	}
 </script>
 
 <div>
 	<ul>
-		{#each events as event, index}
+		{#each companies as company, index}
 			<li>
-				<EditEvent
-					{event}
-					on:delete={() => {
-						handleDelete(index);
-					}}
+				<EditCompany
+					{company}
 					on:edit={() => {
 						handleEdit(index);
+					}}
+					on:delete={() => {
+						handleDelete(index);
 					}}
 				/>
 			</li>
@@ -53,7 +53,7 @@
 </div>
 
 {#if showForm}
-	<EventForm bind:event={formEvent} on:done={handleDone} on:cancel={closeForm} {action} />
+	<CompanyForm bind:company={formCompany} on:done={handleDone} on:cancel={closeForm} {action} />
 {:else}
 	<button type="button" on:click={() => (showForm = true)}>
 		<i class="material-symbols-rounded add-btn">add</i>
@@ -64,11 +64,11 @@
 	ul {
 		padding: 0;
 	}
-
 	li {
 		display: flex;
 		justify-content: space-between;
 		margin-bottom: 0.4rem;
+		text-transform: capitalize;
 	}
 
 	button {

@@ -25,8 +25,7 @@
 		<h4 class="sr-only">events</h4>
 		{#each shownEvents as event}
 			{#if type === 'FULL'}
-				<!-- <EventFull {event} /> -->
-				<EventSummary {event} />
+				<EventFull {event} />
 			{/if}
 
 			{#if type === 'TIME'}

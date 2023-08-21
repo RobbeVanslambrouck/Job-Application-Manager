@@ -1,50 +1,50 @@
 <script lang="ts">
-	import { createEvent, type Event } from '$lib/Event';
-	import EditEvent from './EditEvent.svelte';
-	import EventForm from './EventForm.svelte';
+	import { createContact, type Contact } from '$lib/recruitmentAgency';
+	import EditContact from './EditContact.svelte';
+	import ContactForm from './ContactForm.svelte';
 
-	export let events: Event[];
-	let formEvent = createEvent('');
+	export let contacts: Contact[];
+	let formContact = createContact('');
 	let action: 'ADD' | 'EDIT' = 'ADD';
 	let showForm = false;
 	let editIndex = -1;
 
 	function handleDelete(index: number) {
-		events.splice(index, 1);
-		events = events;
+		contacts.splice(index, 1);
+		contacts = contacts;
 	}
 
 	function handleEdit(index: number) {
 		editIndex = index;
-		formEvent = { ...events[index] };
+		formContact = { ...contacts[index] };
 		showForm = true;
 		action = 'EDIT';
 	}
 
 	function handleDone() {
-		if (action === 'ADD') events = [...events, formEvent];
-		if (action === 'EDIT' && editIndex !== -1) events[editIndex] = formEvent;
+		if (action === 'ADD') contacts = [...contacts, formContact];
+		if (action === 'EDIT' && editIndex !== -1) contacts[editIndex] = formContact;
 		closeForm();
 	}
 
 	function closeForm() {
 		action = 'ADD';
 		showForm = false;
-		formEvent = createEvent('');
+		formContact = createContact('');
 	}
 </script>
 
 <div>
 	<ul>
-		{#each events as event, index}
+		{#each contacts as contact, index}
 			<li>
-				<EditEvent
-					{event}
-					on:delete={() => {
-						handleDelete(index);
-					}}
+				<EditContact
+					{contact}
 					on:edit={() => {
 						handleEdit(index);
+					}}
+					on:delete={() => {
+						handleDelete(index);
 					}}
 				/>
 			</li>
@@ -53,7 +53,7 @@
 </div>
 
 {#if showForm}
-	<EventForm bind:event={formEvent} on:done={handleDone} on:cancel={closeForm} {action} />
+	<ContactForm bind:contact={formContact} on:done={handleDone} on:cancel={closeForm} {action} />
 {:else}
 	<button type="button" on:click={() => (showForm = true)}>
 		<i class="material-symbols-rounded add-btn">add</i>
@@ -64,11 +64,11 @@
 	ul {
 		padding: 0;
 	}
-
 	li {
 		display: flex;
 		justify-content: space-between;
 		margin-bottom: 0.4rem;
+		text-transform: capitalize;
 	}
 
 	button {

@@ -1,28 +1,27 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { deleteApplicationFromFirestore } from '$lib/Application';
-	import { user } from '$lib/stores/auth';
 	import type { PageData } from './$types';
-	import Application from '../../Application.svelte';
+	import Agency from '../../Agency.svelte';
+	import { user } from '$lib/stores/auth';
+	import { deleteAgencyFromFirestore } from '$lib/recruitmentAgency';
+	import { goto } from '$app/navigation';
 
 	export let data: PageData;
-	let application = data.application;
+	let agency = data.agency;
 
 	async function handleDelete() {
 		if (!$user?.uid) return;
-		await deleteApplicationFromFirestore($user.uid, application.id);
-		goto('/dashboard/applications/');
+		await deleteAgencyFromFirestore($user.uid, agency.name);
+		goto('/dashboard/recruitment/');
 	}
 
 	function handleCancel() {
-		goto('/dashboard/applications/');
+		goto('/dashboard/recruitment/');
 	}
 </script>
 
 <h2 class="sr-only">Delete Application</h2>
-<div>
-	<Application {application} />
-</div>
+<Agency {agency} />
+
 <p class="body-large">Are you sure u want to delete this application?</p>
 <div>
 	<button type="button" on:click={handleDelete} class="delete"
@@ -42,7 +41,6 @@
 		gap: 2.4rem;
 		margin-bottom: 2.4rem;
 	}
-
 	.delete {
 		background-color: rgba(var(--md-sys-color-error-container));
 		color: rgba(var(--md-sys-color-error));

@@ -18,6 +18,7 @@ export interface Application {
 	jobTitle: string;
 	links: Link[];
 	events: Event[];
+	state: 'active' | 'denied' | 'accepted';
 }
 
 interface storeEvent {
@@ -34,6 +35,7 @@ interface ApplicationStore {
 	jobTitle: string;
 	links: Link[];
 	events: storeEvent[];
+	state: 'active' | 'denied' | 'accepted';
 }
 
 export function createApplication(companyName = '', jobTitle = '', id?: string): Application {
@@ -42,7 +44,8 @@ export function createApplication(companyName = '', jobTitle = '', id?: string):
 		companyName: companyName,
 		jobTitle: jobTitle,
 		links: [],
-		events: []
+		events: [],
+		state: 'active'
 	};
 }
 
@@ -55,6 +58,7 @@ const ApplicationConverter = {
 		const data = snapshot.data() as ApplicationStore;
 		const id = snapshot.id;
 		const application = createApplication(data.companyName, data.jobTitle, id);
+		application.state = data.state;
 		application.links = data.links;
 		application.events = parseStoreEvents(data.events);
 		return application;

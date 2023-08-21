@@ -1,14 +1,20 @@
 <script lang="ts">
+	import { format } from 'date-fns';
 	import { onMount } from 'svelte';
 
 	export let label: string;
-	export let value = '';
+	export let value: string | Date | undefined | null = '';
 	export let placeholder = '';
 	export let required = false;
-	export let type: 'text' | 'url' | 'email' | 'datetime-local' = 'text';
+	export let focus = false;
+	export let type: 'text' | 'url' | 'email' | 'datetime-local' | 'tel' = 'text';
 
-	function typeAction(node: HTMLInputElement) {
-		node.type = type;
+	let internalValue = '';
+
+	if (value instanceof Date) {
+		internalValue = format(value, 'yyyy-MM-dd') + 'T' + format(value, 'HH:mm');
+	} else if (value) {
+		internalValue = value;
 	}
 
 	let input: HTMLInputElement;
@@ -16,14 +22,27 @@
 	let valid = true;
 	let validationMsg = '';
 
+	$: value = toExportValue(internalValue);
+
+	onMount(() => {
+		validate();
+		if (focus) input.focus();
+	});
+
+	function typeAction(node: HTMLInputElement) {
+		node.type = type;
+	}
+
+	function toExportValue(value: string) {
+		if (type !== 'datetime-local') return value;
+		if (internalValue === '') return null;
+		return new Date(internalValue);
+	}
+
 	function validate() {
 		valid = input.validity.valid;
 		validationMsg = input.validationMessage;
 	}
-
-	onMount(() => {
-		validate();
-	});
 </script>
 
 <label for={label}>{label}:</label>
@@ -32,7 +51,7 @@
 	name={label}
 	{placeholder}
 	id={label}
-	bind:value
+	bind:value={internalValue}
 	{required}
 	bind:this={input}
 	on:input={validate}

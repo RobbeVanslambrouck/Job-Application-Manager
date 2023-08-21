@@ -1,19 +1,18 @@
 <script lang="ts">
-	import Links from './Links.svelte';
-	import Events from './Events.svelte';
+	import Contacts from './Contacts.svelte';
+	import Companies from './Companies.svelte';
 	import Input from '$lib/components/Input.svelte';
-	import { createApplication, type Application } from '$lib/Application';
 	import { createEventDispatcher } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { createRecruitmentAgency, type RecruitmentAgency } from '$lib/recruitmentAgency';
 
-	export let application = createApplication();
+	export let agency: RecruitmentAgency = createRecruitmentAgency();
 	let hideButtons = false;
-	$: isValid = validate(application);
+	$: isValid = validate(agency);
 
 	const dispatch = createEventDispatcher();
-	function validate(application: Application) {
-		if (application.companyName === '') return false;
-		if (application.jobTitle === '') return false;
+	function validate(recruitmentAgency: RecruitmentAgency) {
+		if (recruitmentAgency.name === '') return false;
 		return true;
 	}
 
@@ -21,32 +20,31 @@
 		if (!isValid) return;
 		hideButtons = true;
 		dispatch('done', {
-			application: application
+			recruitmentAgency: agency
 		});
 	}
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
-	<div class="application">
+	<div class="agency">
 		<section>
-			<h3>application info</h3>
-			<Input label="job title" bind:value={application.jobTitle} required={true} />
-			<Input label="company" bind:value={application.companyName} required={true} />
+			<h3>agency info</h3>
+			<Input label="name" bind:value={agency.name} required={true} />
 		</section>
 		<section>
-			<h3>links</h3>
-			<Links bind:links={application.links} />
+			<h3>contacts</h3>
+			<Contacts bind:contacts={agency.contacts} />
 		</section>
 		<section>
-			<h3>events</h3>
-			<Events bind:events={application.events} />
+			<h3>companies</h3>
+			<Companies bind:companies={agency.proposedCompanies} />
 		</section>
 	</div>
 	<div class="buttons">
 		<button type="submit" on:click={handleSubmit} hidden={hideButtons}>
 			<slot name="done-button-text">done</slot>
 		</button>
-		<button type="button" on:click={() => goto('/dashboard/applications/')} hidden={hideButtons}
+		<button type="button" on:click={() => goto('/dashboard/recruitment/')} hidden={hideButtons}
 			>cancel</button
 		>
 	</div>
@@ -57,7 +55,7 @@
 		width: max-content;
 	}
 
-	.application {
+	.agency {
 		display: flex;
 		flex-direction: column;
 		gap: 2.4rem;
